@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "code-generator": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "./node"
+    }
+  }
+}

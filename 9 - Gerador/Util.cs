@@ -1,0 +1,508 @@
+﻿using Gerador.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace Gerador
+{
+   public static class Util
+   {
+      public static void WriteDocument(string Template, string DestinyFile, TableToGenerate tb)
+      {
+         StreamWriter xfile = new StreamWriter(DestinyFile, false, Encoding.UTF8);
+         string? line;
+         System.IO.StreamReader template = new System.IO.StreamReader(Template);
+         while ((line = template.ReadLine()) != null)
+         {
+            if (line.Contains("#Entity#"))
+            {
+               line = line.Replace("#Entity#", tb.TableName);
+            }
+            if (line.Contains("#EntityLowerCase#"))
+            {
+               line = line.Replace("#EntityLowerCase#", tb.TableName.ToLower());
+            }
+            if (line.Contains("#EntityProperties#"))
+            {
+               line = "";
+               var columns = GetEntityProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityBasicFilters#"))
+            {
+               line = "";
+               var columns = GetEntityBasicFilters(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityFormControls#"))
+            {
+               line = "";
+               var columns = GetEntityFormControls(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+
+            if (line.Contains("#EntityConfiguratioPrimaryKey#"))
+            {
+               var primaryKey = tb.ColumList.Where(_ => _.IsPrimaryKey == true).FirstOrDefault();
+               if (primaryKey != null)
+               {
+                  line = line.Replace("#EntityConfiguratioPrimaryKey#", $"builder.HasKey(p => p.{primaryKey.Name});");
+               }
+            }
+            if (line.Contains("#EntityConfiguratioProperties#"))
+            {
+               line = "";
+               var columns = GetEntityConfiguratioProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlMaterialProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlMaterialProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlTableHeaderProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlTableHeaderProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlTableHeaderFilterMaterialProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlTableHeaderFilterMaterialProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlTableHeaderMaterialProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlTableHeaderMaterialProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+            if (line.Contains("#EntityHtmlDisplayedColumnsMaterialProperties#"))
+            {
+               line = "";
+               line = GetEntityHtmlDisplayedColumnsMaterialProperties(tb);
+
+            }
+            if (line.Contains("#EntityHtmlTableRowProperties#"))
+            {
+               line = "";
+               var columns = GetEntityHtmlTableRowProperties(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
+            }
+
+            if (line.Contains("#EntityRepositoryPrimaryKey#"))
+            {
+               var primaryKey = tb.ColumList.Where(_ => _.IsPrimaryKey == true).FirstOrDefault();
+               if (primaryKey != null)
+               {
+                  line = line.Replace("#EntityRepositoryPrimaryKey#", primaryKey.Name);
+               }
+            }
+
+            if (line.Contains("#EntityRepositoryFirstString#"))
+            {
+               var primaryKey = tb.ColumList.Where(column => column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar").FirstOrDefault();
+               if (primaryKey != null)
+               {
+                  line = line.Replace("#EntityRepositoryFirstString#", primaryKey.Name);
+               }
+               else
+               {
+                  primaryKey = tb.ColumList.Where(_ => _.IsPrimaryKey == true).FirstOrDefault();
+                  if (primaryKey != null)
+                  {
+                     line = line.Replace("#EntityRepositoryFirstString#", primaryKey.Name);
+                  }
+               }
+            }
+
+
+            if (line.Contains("#EntityRepositoryPrimaryKeyFront#"))
+            {
+               var primaryKey = tb.ColumList.Where(_ => _.IsPrimaryKey == true).FirstOrDefault();
+               if (primaryKey != null)
+               {
+                  var name = primaryKey.Name.Substring(0, 1).ToLower() + primaryKey.Name.Substring(1);
+                  line = line.Replace("#EntityRepositoryPrimaryKeyFront#", name);
+               }
+            }
+
+            xfile.WriteLine(line);
+         }
+         xfile.Close();
+      }
+
+      public static List<string> GetEntityHtmlTableRowProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            string c = "              <td>{{item." + column.Name.FirstCharToLowerCase() + "}}</td>\r\n";
+            data.Add(c);
+         }
+         return data;
+      }
+
+      public static List<string> GetEntityHtmlTableHeaderProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"              <th>{column.Name}</th>\r\n";
+            data.Add(c);
+         }
+         return data;
+      }
+
+      public static List<string> GetEntityHtmlTableHeaderFilterMaterialProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"     <ng-container matColumnDef=\"filtro_{column.Name.FirstCharToLowerCase()}\">\r\n";
+            c += $"                 <th mat-header-cell *matHeaderCellDef class=\"bg-slate-50\">\r\n";
+            c += $"                    <mat-form-field class=\"mt-1 mb-1 w-100\">\r\n";
+            c += $"                       <input matInput type=\"text\" [(ngModel)]=\"filters['{column.Name.FirstCharToLowerCase()}']\" (ngModelChange)=\"onFilter(filters)\" /> \r\n";
+            c += $"                    </mat-form-field> </th>\r\n";
+            c += $"          </ng-container>\r\n";
+            data.Add(c);
+         }
+         return data;
+      }
+      public static List<string> GetEntityHtmlTableHeaderMaterialProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"<ng-container matColumnDef=\"{column.Name.FirstCharToLowerCase()}\">\r\n";
+            c += $"        <th mat-header-cell mat-sort-header *matHeaderCellDef class=\"bg-slate-100 text-sm\"> {column.Name} </th>\r\n";
+            c += $"        <td mat-cell *matCellDef=\"let element\"> {"{{element." + column.Name.FirstCharToLowerCase() + "}}"} </td>\r\n";
+            c += $"     </ng-container>\r\n";
+            data.Add(c);
+         }
+         return data;
+      }
+
+      public static string GetEntityHtmlDisplayedColumnsMaterialProperties(TableToGenerate tb)
+      {
+         var data = "    displayedColumns: string[] = [ ";
+         foreach (var column in tb.ColumList)
+         {
+            data += "'" + column.Name.FirstCharToLowerCase() + "', ";
+         }
+         return data + " 'buttons' ]";
+      }
+
+      public static List<string> GetEntityFormControls(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"      {column.Name}: new FormControl(),\r\n";
+            data.Add(c);
+         }
+         return data;
+      }
+
+      public static List<string> GetEntityHtmlProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"        <div class=\"col-md-12 px-2\">\r\n";
+            c += $"          <div class=\"form-group\">\r\n";
+            string required = column.IsNullable ? "" : "required";
+            if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar"))
+            {
+               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+               c += $"            <input type=\"text\" class=\"form-control\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+            }
+
+            if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime")
+            {
+               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+               c += $"            <input type=\"datetime-local\" class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" />\r\n";
+            }
+            if (column.Type.ToLower() == "bit")
+            {
+               c += $"             <input type=\"checkbox\"  formControlName=\"{column.Name}\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"/> {column.Name}\r\n";
+            }
+            if (column.IsForeignKey)
+            {
+               var dataItem = column.Name;
+               if (column.Name.ToLower().StartsWith("id"))
+               {
+                  dataItem = column.Name.Substring(2);
+               }
+               else if (column.Name.ToLower().EndsWith("id"))
+               {
+                  dataItem = column.Name.Substring(0, column.Name.Length - 2);
+               }
+               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+               c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+            }
+            if (!column.IsPrimaryKey && column.Type.ToLower() == "int" && !column.IsForeignKey)
+            {
+               if (column.Name.ToLower().StartsWith("id"))
+               {
+                  var dataItem = column.Name.Substring(2);
+                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+                  c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               }
+               else if (column.Name.ToLower().EndsWith("id"))
+               {
+                  var dataItem = column.Name.Substring(0, column.Name.Length - 2);
+                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+                  c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               }
+               else
+               {
+                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
+                  c += $"            <input type=\"number\" class=\"form-control\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+               }
+            }
+            c += "          </div>\r\n";
+            c += "        </div>\r\n";
+
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityHtmlMaterialProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"        <mat-form-field class=\"w-full mt-3\">\r\n";
+            //c += $"          <div class=\"form-group\">\r\n";
+            string required = column.IsNullable ? "" : "required";
+            if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar"))
+            {
+               c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+               c += $"            <input matInput type=\"text\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+            }
+
+            if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime")
+            {
+               c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+               c += $"            <input matInput type=\"datetime-local\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" />\r\n";
+            }
+            if (column.Type.ToLower() == "bit")
+            {
+                    c = "<div class=\"w-full \">\r\n";
+                c += $"<mat-checkbox formControlName=\"{column.Name}\" name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\">{column.Name}</mat-checkbox>\r\n";
+                    c += "</div>\r\n";
+                    data.Add(c);
+                    continue;
+            }
+            if (column.IsForeignKey)
+            {
+               var dataItem = column.Name;
+               if (column.Name.ToLower().StartsWith("id"))
+               {
+                  dataItem = column.Name.Substring(2);
+               }
+               else if (column.Name.ToLower().EndsWith("id"))
+               {
+                  dataItem = column.Name.Substring(0, column.Name.Length - 2);
+               }
+               c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+               c += $"            <select matNativeControl  formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+            }
+            if (!column.IsPrimaryKey && column.Type.ToLower() == "int" && !column.IsForeignKey)
+            {
+               if (column.Name.ToLower().StartsWith("id"))
+               {
+                  var dataItem = column.Name.Substring(2);
+                  c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+                  c += $"            <select matNativeControl formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               }
+               else if (column.Name.ToLower().EndsWith("id"))
+               {
+                  var dataItem = column.Name.Substring(0, column.Name.Length - 2);
+                  c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+                  c += $"            <select  matNativeControl  formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               }
+               else
+               {
+                  c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
+                  c += $"            <input matInput type=\"number\"  name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+               }
+            }
+            //   c += "          </div>\r\n";
+            c += "        </mat-form-field>\r\n";
+
+            if (!column.IsPrimaryKey)
+            {
+               data.Add(c);
+            }
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityConfiguratioProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = $"            builder.Property(p => p.{column.Name})";
+            c += $".HasColumnType(\"{column.Type}\")";
+
+            if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar") && column.Length > 0)
+               c += $".HasMaxLength({column.Length})";
+
+            if (column.IsNullable == false)
+               c += ".IsRequired()";
+            c += ";\r\n\r\n";
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = "        public ";
+            c += GetEntityColumnType(column) + "?";
+            c += " " + column.Name + " { get; set; }\r\n";
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityBasicFilters(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = "";
+            var cType = GetEntityColumnType(column).Replace("?", "");
+            if (cType == "string")
+            {
+               c = $"            if (!string.IsNullOrEmpty(filters.{column.Name}))\r\n";
+               c += $"                queryFilter = queryFilter.Where(_ => _.{column.Name}.Contains(filters.{column.Name}));\r\n\r\n";
+
+               data.Add(c);
+            }
+            else if (cType == "DateTime")
+            {
+               c = $"            if (filters.{column.Name} != null)\r\n";
+               c += "            {\r\n";
+               c += $"                DateTime Start = new DateTime(Convert.ToDateTime(filters.{column.Name}).Year, Convert.ToDateTime(filters.{column.Name}).Month, Convert.ToDateTime(filters.{column.Name}).Day);\r\n";
+               c += $"                DateTime End = Start.AddDays(1);\r\n";
+               c += $"                queryFilter = queryFilter.Where(_ => _.{column.Name} >= Start && _.{column.Name} < End);\r\n";
+               c += "            }\r\n\r\n";
+
+            }
+            else if (cType == "bool" || cType == "int" || cType == "long")
+            {
+               c = $"            if (filters.{column.Name} != null)\r\n";
+               c += $"                queryFilter = queryFilter.Where(_ => _.{column.Name} == filters.{column.Name});\r\n";
+            }
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static string GetEntityColumnType(TableColum dc)
+      {
+         string stype = "";
+         string type = dc.Type.ToLower();
+         
+         // Tipos numéricos decimais (SQL Server e MySQL)
+         if (type == "decimal" || type == "numeric") { stype = "decimal"; }
+         
+         // Tipos booleanos (SQL Server e MySQL)
+         else if (type == "bit" || type == "boolean" || type == "bool" || type == "tinyint") { stype = "bool"; }
+         
+         // Tipos de string (SQL Server e MySQL)
+         else if (type == "char" || type == "varchar" || type == "nvarchar" || type == "text" || 
+                  type == "longtext" || type == "mediumtext" || type == "tinytext" || 
+                  type == "uniqueidentifier" || type == "json") { stype = "string"; }
+         
+         // Tipos de data/hora (SQL Server e MySQL)
+         else if (type == "datetime" || type == "date" || type == "timestamp" || 
+                  type == "datetime2" || type == "smalldatetime" || type == "time") { stype = "DateTime"; }
+         
+         // Tipos de ponto flutuante (SQL Server e MySQL)
+         else if (type == "float" || type == "double" || type == "real" || type == "money" || type == "smallmoney") { stype = "double"; }
+         
+         // Tipos inteiros (SQL Server e MySQL)
+         else if (type == "int" || type == "integer" || type == "smallint" || type == "mediumint") { stype = "int"; }
+         
+         // Tipos inteiros grandes (SQL Server e MySQL)
+         else if (type == "bigint") { stype = "long"; }
+         
+         // Tipos binários (tratados como byte array, mas usando string por simplicidade)
+         else if (type == "binary" || type == "varbinary" || type == "blob" || type == "longblob" || 
+                  type == "mediumblob" || type == "tinyblob") { stype = "byte[]"; }
+         
+         else stype = "string"; // Default para string ao invés de "unknown"
+
+         return stype;
+      }
+
+      public static string? FirstCharToLowerCase(this string? str)
+      {
+         if (!string.IsNullOrEmpty(str) && char.IsUpper(str[0]))
+            return str.Length == 1 ? char.ToLower(str[0]).ToString() : char.ToLower(str[0]) + str[1..];
+
+         return str;
+      }
+   }
+}

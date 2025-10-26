@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerador", "Gerador.csproj", "{F65EC9DF-FE3F-1A42-F5B3-EFC3D1AF1BC9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F65EC9DF-FE3F-1A42-F5B3-EFC3D1AF1BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F65EC9DF-FE3F-1A42-F5B3-EFC3D1AF1BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F65EC9DF-FE3F-1A42-F5B3-EFC3D1AF1BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F65EC9DF-FE3F-1A42-F5B3-EFC3D1AF1BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC862BC5-E22E-4E3B-B575-8CD2EC0A1E98}
+	EndGlobalSection
+EndGlobal
