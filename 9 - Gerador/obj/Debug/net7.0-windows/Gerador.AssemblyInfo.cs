@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gerador")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57276a0097c15d644ea40c6cde44e5cf237e7659")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+446fa021b0a2b02f425d9dd322f1968d103c5b69")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gerador")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gerador")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
