@@ -2032,11 +2032,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\Gerador.csproj",
+      "projectUniqueName": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\Gerador.csproj",
       "projectName": "Gerador",
-      "projectPath": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\Gerador.csproj",
+      "projectPath": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\Gerador.csproj",
       "packagesPath": "C:\\Users\\dnlsa\\.nuget\\packages\\",
-      "outputPath": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\obj\\",
+      "outputPath": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

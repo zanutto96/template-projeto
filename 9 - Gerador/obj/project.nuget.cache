@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GZirZAKZRbI=",
+  "dgSpecHash": "bNnkD0VdsYo=",
   "success": true,
-  "projectFilePath": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\Gerador.csproj",
+  "projectFilePath": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\Gerador.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dnlsa\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\dnlsa\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
@@ -51,9 +51,9 @@
       "code": "NU1903",
       "level": "Warning",
       "message": "Package 'System.Data.SqlClient' 4.8.5 has a known high severity vulnerability, https://github.com/advisories/GHSA-98g6-xh36-x2p7",
-      "projectPath": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\Gerador.csproj",
+      "projectPath": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\Gerador.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\WORK\\WILL\\Hoffman-novoch-dev\\Gerador\\Gerador.csproj",
+      "filePath": "C:\\WORK\\ZALMS\\TEMPLATES\\template-projeto\\9 - Gerador\\Gerador.csproj",
       "libraryId": "System.Data.SqlClient",
       "targetGraphs": [
         "net7.0-windows7.0"
