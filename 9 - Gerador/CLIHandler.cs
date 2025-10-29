@@ -37,7 +37,7 @@ public class CLIHandler
         _frontEndTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "FrontEnd");
     }
 
-    public async Task GenerateAsync(string? tableName = null)
+    public async Task GenerateAsync(string? tableName = null, bool backendOnly = false, bool frontendOnly = false)
     {
         Console.WriteLine("Conectando ao banco de dados...");
         _tableList = _repository.GetTableToGenerates();
@@ -65,8 +65,27 @@ public class CLIHandler
         foreach (var table in _tableList)
         {
             Console.WriteLine($"Gerando {table.TableName}...");
-            GenerateBack(table);
-            GenerateFront(table);
+            if (!frontendOnly)
+            {
+                GenerateBack(table);
+            }
+            if (!backendOnly)
+            {
+                GenerateFront(table);
+            }
+        }
+
+        // Aplicar modificações nos arquivos de configuração apenas se backend foi gerado
+        if (!frontendOnly)
+        {
+            ApplyConfigContainerChanges();
+            ApplyDataContextChanges();
+        }
+
+        // Aplicar modificações no routing apenas se frontend foi gerado
+        if (!backendOnly)
+        {
+            ApplyAppRoutingChanges();
         }
 
         WriteInstructionsFile();
@@ -92,12 +111,23 @@ public class CLIHandler
 
     private void CreateDirectories()
     {
-        var directories = new[]
-        {
-            _spaUI, _controllers, _service, _serviceBusiness, _serviceValidation,
-            _domain, _domainEntities, _domainFilters, _data, _dataBasicExtension,
-            _dataConfiguration, _dataRepository
-        };
+        var directories = new List<string>();
+
+        // Sempre adicionar diretórios do backend se não for frontend-only
+        if (!string.IsNullOrEmpty(_controllers)) directories.Add(_controllers);
+        if (!string.IsNullOrEmpty(_service)) directories.Add(_service);
+        if (!string.IsNullOrEmpty(_serviceBusiness)) directories.Add(_serviceBusiness);
+        if (!string.IsNullOrEmpty(_serviceValidation)) directories.Add(_serviceValidation);
+        if (!string.IsNullOrEmpty(_domain)) directories.Add(_domain);
+        if (!string.IsNullOrEmpty(_domainEntities)) directories.Add(_domainEntities);
+        if (!string.IsNullOrEmpty(_domainFilters)) directories.Add(_domainFilters);
+        if (!string.IsNullOrEmpty(_data)) directories.Add(_data);
+        if (!string.IsNullOrEmpty(_dataBasicExtension)) directories.Add(_dataBasicExtension);
+        if (!string.IsNullOrEmpty(_dataConfiguration)) directories.Add(_dataConfiguration);
+        if (!string.IsNullOrEmpty(_dataRepository)) directories.Add(_dataRepository);
+
+        // Sempre adicionar diretórios do frontend se não for backend-only
+        if (!string.IsNullOrEmpty(_spaUI)) directories.Add(_spaUI);
 
         foreach (var dir in directories)
         {
@@ -127,6 +157,7 @@ public class CLIHandler
         Directory.CreateDirectory(registerPath);
         Directory.CreateDirectory(listPath);
 
+        Util.WriteDocument(Path.Combine(_frontEndTemplatePath!, "model.ts.tpl"), Path.Combine(componentPath, $"{tb.TableName.ToLower()}.model.ts"), tb);
         Util.WriteDocument(Path.Combine(_frontEndTemplatePath!, "service.ts.tpl"), Path.Combine(componentPath, $"{tb.TableName.ToLower()}.service.ts"), tb);
         Util.WriteDocument(Path.Combine(_frontEndTemplatePath!, "module.ts.tpl"), Path.Combine(componentPath, $"{tb.TableName.ToLower()}.module.ts"), tb);
         Util.WriteDocument(Path.Combine(_frontEndTemplatePath!, "component.ts.tpl"), Path.Combine(componentPath, $"{tb.TableName.ToLower()}.component.ts"), tb);
@@ -207,6 +238,141 @@ public class CLIHandler
         writer.WriteLine("3 - into routing component on Route Key: { path: '', data : { title : \"Client\" }, component: ClientComponent },");
         writer.WriteLine("4 - then create a route into app.routing { path: 'client',  loadChildren: () => import('./main/client/client.module').then(m => m.ClientModule) },");
         writer.WriteLine("");
+    }
+
+    private void ApplyConfigContainerChanges()
+    {
+        string configContainerPath = Path.Combine(_settings.BackPath, "Api", "Config", "ConfigContainer.cs");
+
+        if (!File.Exists(configContainerPath))
+        {
+            Console.WriteLine("Aviso: ConfigContainer.cs não encontrado. Pule a modificação.");
+            return;
+        }
+
+        try
+        {
+            string content = File.ReadAllText(configContainerPath);
+
+            // Procurar pelo comentário "//Gerador Adicionar aqui"
+            string marker = "//Gerador Adicionar aqui";
+            int markerIndex = content.IndexOf(marker);
+
+            if (markerIndex == -1)
+            {
+                Console.WriteLine("Aviso: Marcador '//Gerador Adicionar aqui' não encontrado em ConfigContainer.cs");
+                return;
+            }
+
+            // Encontrar o final da linha do marcador
+            int lineEndIndex = content.IndexOf('\n', markerIndex);
+            if (lineEndIndex == -1) lineEndIndex = content.Length;
+
+            // Inserir as novas linhas após o marcador
+            string newLines = string.Join(Environment.NewLine, _apiInjectionInstructions.Select(line => line.Trim()));
+            string newContent = content.Insert(lineEndIndex + 1, newLines + Environment.NewLine);
+
+            File.WriteAllText(configContainerPath, newContent);
+            Console.WriteLine("ConfigContainer.cs atualizado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao modificar ConfigContainer.cs: {ex.Message}");
+        }
+    }
+
+    private void ApplyDataContextChanges()
+    {
+        string dataContextPath = Path.Combine(_settings.BackPath, "Data", "Context", "DataContext.cs");
+
+        if (!File.Exists(dataContextPath))
+        {
+            Console.WriteLine("Aviso: DataContext.cs não encontrado. Pule a modificação.");
+            return;
+        }
+
+        try
+        {
+            string content = File.ReadAllText(dataContextPath);
+
+            // Procurar pelo comentário "//Gerador Adicionar aqui"
+            string marker = "//Gerador Adicionar aqui";
+            int markerIndex = content.IndexOf(marker);
+
+            if (markerIndex == -1)
+            {
+                Console.WriteLine("Aviso: Marcador '//Gerador Adicionar aqui' não encontrado em DataContext.cs");
+                return;
+            }
+
+            // Encontrar o final da linha do marcador
+            int lineEndIndex = content.IndexOf('\n', markerIndex);
+            if (lineEndIndex == -1) lineEndIndex = content.Length;
+
+            // Verificar se as DbSets já existem
+            List<string> newLines = new List<string>();
+            foreach (var instruction in _dataContextInstructions)
+            {
+                if (!content.Contains(instruction.Trim()))
+                {
+                    newLines.Add(instruction);
+                }
+            }
+
+            if (newLines.Count == 0)
+            {
+                Console.WriteLine("DataContext.cs já está atualizado.");
+                return;
+            }
+
+            // Inserir as novas linhas após o marcador
+            string newContent = content.Insert(lineEndIndex + 1, string.Join(Environment.NewLine, newLines) + Environment.NewLine);
+
+            File.WriteAllText(dataContextPath, newContent);
+            Console.WriteLine("DataContext.cs atualizado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao modificar DataContext.cs: {ex.Message}");
+        }
+    }
+
+    private void ApplyAppRoutingChanges()
+    {
+        string appRoutingPath = Path.Combine(_settings.FrontPath, "src", "app", "app-routing.module.ts");
+
+        if (!File.Exists(appRoutingPath))
+        {
+            Console.WriteLine("Aviso: app-routing.module.ts não encontrado. Pule a modificação.");
+            return;
+        }
+
+        try
+        {
+            string content = File.ReadAllText(appRoutingPath);
+
+            // Procurar pelo comentário das rotas do gerador
+            string marker = "// Gerador aqui";
+            int markerIndex = content.IndexOf(marker);
+
+            if (markerIndex == -1)
+            {
+                Console.WriteLine("Aviso: Marcador de rotas do gerador não encontrado em app-routing.module.ts");
+                return;
+            }
+
+            // Inserir as novas rotas antes do marcador
+            string newRoutes = string.Join(Environment.NewLine + "      ", _routingInstructions);
+            string replacement = newRoutes + Environment.NewLine + "      " + marker;
+            string newContent = content.Replace(marker, replacement);
+
+            File.WriteAllText(appRoutingPath, newContent);
+            Console.WriteLine("app-routing.module.ts atualizado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao modificar app-routing.module.ts: {ex.Message}");
+        }
     }
 
     private string ExtractDatabaseName(string connectionString)

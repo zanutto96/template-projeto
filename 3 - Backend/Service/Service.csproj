@@ -14,9 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.Cripto\Common.Cripto.csproj" />
     <ProjectReference Include="..\Common\Common.Domain\Common.Domain.csproj" />
-    <ProjectReference Include="..\Common\Common.Email\Common.Email.csproj" />
-    <ProjectReference Include="..\Common\Common.NotaFiscal\Common.NotaFiscal.csproj" />
-    <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="C:\WORK\ZALMS\TEMPLATES\template-projeto\3 - Backend\Data\Data.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 

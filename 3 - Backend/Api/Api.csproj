@@ -26,7 +26,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.Domain\Common.Domain.csproj" />
-		<ProjectReference Include="..\Common\Common.Email\Common.Email.csproj" />
 		<ProjectReference Include="..\Common\Common.Security\Common.Security.csproj" />
 		<ProjectReference Include="..\Common\Common.Storage\Common.Storage.csproj" />
 		<ProjectReference Include="..\Data\Data.csproj" />

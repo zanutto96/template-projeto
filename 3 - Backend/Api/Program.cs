@@ -32,11 +32,7 @@ builder.Services.AddCors();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
-ConfigContainer.Config(builder.Services);
-
-//builder.Services.AddDbContext<DataContext>(
-//   options => options.UseSqlServer(builder.Configuration.GetSection($"ConfigConnectionString:Default").Value)
-//   );
+ConfigContainer.Config(builder.Services, builder.Configuration);
 
 // var serverVersion = new MySqlServerVersion(new Version(11, 0, 2));
 // builder.Services.AddDbContext<DataContext>(

@@ -1,23 +1,30 @@
-﻿using Common.Email;
-using Common.NotaFiscal;
 using Common.Security.Identity;
 using Data.BasicExtensions;
 using Data.Repository;
 using Service;
 using Service.Business;
+using Microsoft.EntityFrameworkCore;
+using Data.Context;
 
 namespace Api
 {
    public static class ConfigContainer
    {
-      public static void Config(IServiceCollection services)
+      public static void Config(IServiceCollection services, IConfiguration configuration)
       {
-         //Gerador Adicionar aqui
+         // Registrar o DataContext (ESSENCIAL para os repositórios funcionarem)
+         services.AddDbContext<DataContext>(options =>
+            options.UseSqlServer(configuration["ConfigConnectionString:Default"]));
 
-			services.AddScoped<AlunoService>();
-			services.AddScoped<AlunoRepository>();
-			services.AddScoped<AlunoStatusService>();
-			services.AddScoped<AlunoStatusRepository>();
+
+         //Gerador Adicionar aqui
+services.AddScoped<AlunoStatusService>();
+services.AddScoped<AlunoStatusRepository>();
+services.AddScoped<AlunoStatusService>();
+services.AddScoped<AlunoStatusRepository>();
+         
+         services.AddScoped<AlunoStatusService>();
+         services.AddScoped<AlunoStatusRepository>();
 
          RegisterOtherComponents(services);
       }

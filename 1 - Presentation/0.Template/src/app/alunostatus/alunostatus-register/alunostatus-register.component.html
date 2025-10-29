@@ -1,0 +1,50 @@
+﻿<div class="register-modal-container">
+  <!-- Modal Header -->
+  <div class="modal-header-custom">
+    <h2 class="modal-title">
+      {{ model.alunoStatusId ? 'Editar' : 'Novo' }} AlunoStatus
+    </h2>
+    <button type="button"
+            class="btn-close-custom"
+            (click)="onNoClick()"
+            aria-label="Fechar">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Modal Body -->
+  <div class="modal-body-custom">
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="register-form">
+
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="descricao">Descricao</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="descricao"  name="descricao" [(ngModel)]="model.descricao" id="descricao" placeholder="Digite o descricao">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button"
+                class="btn btn-outline-secondary"
+                (click)="onNoClick()">
+          <i class="fas fa-times"></i>
+          Cancelar
+        </button>
+
+        <button type="submit"
+                class="btn btn-primary"
+                [disabled]="form.invalid">
+          <i class="fas fa-save"></i>
+          {{ model.alunoStatusId ? 'Atualizar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

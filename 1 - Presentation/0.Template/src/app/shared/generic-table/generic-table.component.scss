@@ -1,3 +1,5 @@
+@import 'shared';
+
 .generic-table-wrapper {
   
   .filters-section {
@@ -29,6 +31,128 @@
       &:hover {
         background: var(--bs-primary);
         color: var(--bs-white);
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid #{palette-color('grey-2')};
+      background: #{palette-color('grey-1')};
+      border-radius: 0 0 6px 6px;
+
+      .add-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+        min-width: 140px;
+        justify-content: center;
+        background: linear-gradient(135deg, #{palette-color('success')}, #{palette-color('success', 0.8)});
+        color: white;
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+
+        i {
+          font-size: 14px;
+        }
+
+        span {
+          font-size: 14px;
+        }
+
+        &:hover {
+          background: linear-gradient(135deg, #{palette-color('success', 0.8)}, #{palette-color('success')});
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(34, 197, 94, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+        }
+      }
+
+      .filter-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid transparent;
+        min-width: 120px;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+
+        i {
+          font-size: 12px;
+        }
+
+        span {
+          font-size: 14px;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        &:hover::before {
+          left: 100%;
+        }
+
+        &.btn-outline-primary {
+          background: transparent;
+          color: #{palette-color('primary')};
+          border-color: #{palette-color('primary')};
+          box-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+
+          &:hover {
+            background: #{palette-color('primary')};
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+            border-color: #{palette-color('primary')};
+          }
+        }
+
+        &.btn-outline-secondary {
+          background: transparent;
+          color: #{palette-color('grey-7')};
+          border-color: #{palette-color('grey-3')};
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+          &:hover {
+            background: #{palette-color('grey-2')};
+            color: #{palette-color('grey-8')};
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            border-color: #{palette-color('grey-3')};
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
       }
     }
   }

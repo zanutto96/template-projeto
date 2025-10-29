@@ -54,8 +54,11 @@ const routes: Routes = [
         path: 'dashboards',
         loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)
       },
-      // { path: 'aluno', loadChildren: () => import('./aluno/aluno.module').then(m => m.AlunoModule) }
-      // { path: 'alunostatus', loadChildren: () => import('./alunostatus/alunostatus.module').then(m => m.AlunoStatusModule) },
+
+      { path: 'alunostatus', loadChildren: () => import('./alunostatus/alunostatus.module').then(m => m.AlunoStatusModule) },
+    
+      // Gerador aqui
+      
     ]
   },
   /*

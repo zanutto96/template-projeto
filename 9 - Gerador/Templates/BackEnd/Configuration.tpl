@@ -12,6 +12,8 @@ namespace Data.Configuration
             #EntityConfiguratioPrimaryKey#
 
             #EntityConfiguratioProperties#
+
+            #EntityConfiguratioRelations#
         }
     }
 }

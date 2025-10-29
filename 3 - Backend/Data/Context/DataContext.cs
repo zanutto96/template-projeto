@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Context
@@ -13,9 +13,9 @@ namespace Data.Context
       }
 
       //Gerador Adicionar aqui
-      
-public virtual DbSet<Aluno> Aluno { get; set; }
-public virtual DbSet<AlunoStatus> AlunoStatus { get; set; }
+      public virtual DbSet<AlunoStatus> AlunoStatus { get; set; }
+
+
 
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)

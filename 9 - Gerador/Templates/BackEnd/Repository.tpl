@@ -84,9 +84,13 @@ namespace Data.Repository
         public async Task<#Entity#> Save(#Entity# entity)
         {
             var result = this._dataContext.Add(entity);
-            result.Entity.UpdateAudit(_currentUser);
+            var auditEntity = result.Entity as Data.BasicExtensions.AuditBasic;
+            if (auditEntity != null)
+            {
+                auditEntity.UpdateAudit(_currentUser);
+            }
             await this._dataContext.SaveChangesAsync();
-            return result.Entity; 
+            return result.Entity;
         }
 
         public async Task<#Entity#> SavePartial(#Entity# entity)
@@ -98,7 +102,11 @@ namespace Data.Repository
             if(existing != null)
             {
                 _dataContext.Entry(existing).CurrentValues.SetValues(entity);
-                _dataContext.Entry(existing).Entity.UpdateAudit(_currentUser);
+                var auditEntity = _dataContext.Entry(existing).Entity as Data.BasicExtensions.AuditBasic;
+                if (auditEntity != null)
+                {
+                    auditEntity.UpdateAudit(_currentUser);
+                }
                 _dataContext.Update(existing);
                 await _dataContext.SaveChangesAsync();
             } 

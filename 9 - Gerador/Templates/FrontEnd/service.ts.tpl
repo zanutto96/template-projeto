@@ -1,6 +1,8 @@
-﻿import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+﻿
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiService } from '../common/services/api.service';
+import { #Entity# } from './#entity#.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,23 +11,23 @@ export class #Entity#Service {
 
   constructor(private api: ApiService) { }
 
-  get#Entity#(filters?: any): Observable<any> {
+  get#Entity#(filters?: Partial<#Entity#>): Observable<{ data: { dataList: #Entity#[] } }> {
     return this.api.get('#Entity#', 'GetData', filters);
   }
 
-  get#Entity#ById(id: number): Observable<any> {
-    return this.api.get('#Entity#', 'GetById', { id });
+  get#Entity#ById(filters?: Partial<#Entity#>): Observable<#Entity#> {
+    return this.api.get('#Entity#', 'GetById', filters);
   }
 
-  save#Entity#(model: any): Observable<any> {
+  save#Entity#(model: Partial<#Entity#>): Observable<#Entity#> {
     return this.api.post('#Entity#', model);
   }
 
-  update#Entity#(model: any): Observable<any> {
+  update#Entity#(model: Partial<#Entity#>): Observable<#Entity#> {
     return this.api.put('#Entity#', model);
   }
 
-  delete#Entity#(model: any): Observable<any> {
+  delete#Entity#(model: Partial<#Entity#>): Observable<void> {
     return this.api.delete('#Entity#', model);
   }
 }

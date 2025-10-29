@@ -5,7 +5,6 @@ using System.Data.Entity.Core.Objects;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Linq.Dynamic.Core;
-using Microsoft.IdentityModel.Tokens;
 
 
 namespace Data.BasicExtensions
@@ -37,7 +36,7 @@ namespace Data.BasicExtensions
 
         public static IQueryable<#Entity#> OrderByDomain(this IQueryable<#Entity#> queryBase, #Entity#Filter filters)
         {
-           if (!filters.OrderBy.IsNullOrEmpty())
+           if (!string.IsNullOrEmpty(filters.OrderBy))
             {
                if (filters.OrderByType == OrderByType.OrderByDescending)
                   return queryBase.AsQueryable().OrderBy(filters.OrderBy + " DESC");

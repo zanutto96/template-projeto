@@ -2,13 +2,16 @@
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { #Entity#Service } from '../#EntityLowerCase#.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { #Entity# } from './../#entity#.model';
 
 @Component({
   selector: '#EntityLowerCase#-register',
   templateUrl: './#EntityLowerCase#-register.component.html',
   styleUrls: ['./#EntityLowerCase#-register.component.scss'],
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ]
 })
 export class #Entity#RegisterComponent implements OnInit {
@@ -67,11 +70,11 @@ export class #Entity#RegisterComponent implements OnInit {
   }
 
   getData() {
-    var filters = {
-      #EntityRepositoryPrimaryKey#: this.data?.id || this.id
+    var filters: Partial<#Entity#> = {
+      #EntityRepositoryPrimaryKeyFront#: this.data?.id || this.id
     };
-    if (filters.#EntityRepositoryPrimaryKey# > 0) {
-      this.service.get#Entity#ById(filters.#EntityRepositoryPrimaryKey#).subscribe({
+    if (filters.#EntityRepositoryPrimaryKeyFront# > 0) {
+      this.service.get#Entity#ById(filters).subscribe({
         next: (result: any) => {
           // Verificar se a resposta tem a estrutura nova ou antiga
           if (result && result.data) {

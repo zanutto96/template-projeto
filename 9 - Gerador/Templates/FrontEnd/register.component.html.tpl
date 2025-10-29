@@ -1,22 +1,43 @@
-﻿<form [formGroup]="form" (ngSubmit)="onSave()" class="p-4">
-  <div class="modal-header border-0 pb-0">
-    <h4 class="modal-title">{{ model.#EntityRepositoryPrimaryKeyFront# ? 'Editar' : 'Cadastrar' }} #Entity#</h4>
-    <button type="button" class="btn-close" (click)="onNoClick()" aria-label="Close"></button>
-  </div>
-
-  <div class="modal-body">
-    <div class="row g-3">
-      #EntityHtmlFormFields#
-    </div>
-  </div>
-
-  <div class="modal-footer border-0 pt-0">
-    <button type="button" class="btn btn-outline-secondary" (click)="onNoClick()">
-      <i class="fas fa-times me-2"></i>Cancelar
-    </button>
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
-      <i class="fas fa-save me-2"></i>Salvar
+﻿<div class="register-modal-container">
+  <!-- Modal Header -->
+  <div class="modal-header-custom">
+    <h2 class="modal-title">
+      {{ model.#EntityRepositoryPrimaryKeyFront# ? 'Editar' : 'Novo' }} #Entity#
+    </h2>
+    <button type="button"
+            class="btn-close-custom"
+            (click)="onNoClick()"
+            aria-label="Fechar">
+      <i class="fas fa-times"></i>
     </button>
   </div>
-</form>
+
+  <!-- Modal Body -->
+  <div class="modal-body-custom">
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="register-form">
+
+      <!-- Form Section -->
+      <div class="form-section">
+        #EntityHtmlFormFields#
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button"
+                class="btn btn-outline-secondary"
+                (click)="onNoClick()">
+          <i class="fas fa-times"></i>
+          Cancelar
+        </button>
+
+        <button type="submit"
+                class="btn btn-primary"
+                [disabled]="form.invalid">
+          <i class="fas fa-save"></i>
+          {{ model.#EntityRepositoryPrimaryKeyFront# ? 'Atualizar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
 

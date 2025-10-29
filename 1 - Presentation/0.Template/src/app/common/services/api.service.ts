@@ -80,7 +80,7 @@ export class ApiService {
 
   public get(resource: any, route: any, filters: any, showLoading = true): Observable<any> {
     filters = filters || {};
-    // filters.random = String(Math.random());
+
     return this.http
       .get(this.urlBase + '/' + resource + '/' + route, {
         params: this.setParameter(filters),
@@ -177,7 +177,7 @@ export class ApiService {
 
   public post(resource: any, model: any, showLoading: boolean = true, showNotification: boolean = true): Observable<any> {
 
-    return this.http.post<any>(this.urlBase + '/' + resource + '?random=' + String(Math.random()), model, this.httpOptions).pipe(
+    return this.http.post<any>(this.urlBase + '/' + resource, model, this.httpOptions).pipe(
       map((data: any) => {
         if (showNotification) {
           this.success('Salvo com sucesso')
@@ -198,7 +198,7 @@ export class ApiService {
 
   public put(resource: any, model: any, showLoading: boolean = true, showNotification: boolean = true): Observable<any> {
 
-    return this.http.put(this.urlBase + '/' + resource + '?random=' + String(Math.random()), model, this.httpOptions).pipe(
+    return this.http.put(this.urlBase + '/' + resource, model, this.httpOptions).pipe(
       map((data: any) => {
         if (showNotification) {
           this.success('Salvo com sucesso')
@@ -218,7 +218,7 @@ export class ApiService {
 
   public delete(resource: any, model: any, showLoading: boolean = true, showNotification: boolean = true): Observable<any> {
     var ro = Object.assign(this.httpOptions, this.makeSearchParams(model));
-    return this.http.delete(this.urlBase + '/' + resource + '?random=' + String(Math.random()), {
+    return this.http.delete(this.urlBase + '/' + resource, {
       body: model,
       headers: this.httpOptions.headers
     }).pipe(

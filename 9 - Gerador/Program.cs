@@ -25,23 +25,41 @@ static class Program
             name: "--table",
             description: "Nome da tabela específica para gerar código (opcional - gera todas se não especificado)");
 
+        var backendOnlyOption = new Option<bool>(
+            name: "--backend-only",
+            description: "Gera apenas o código do backend (.NET)");
+
+        var frontendOnlyOption = new Option<bool>(
+            name: "--frontend-only",
+            description: "Gera apenas o código do frontend (Angular)");
+
         var rootCommand = new RootCommand("Gerador de código CRUD para projetos .NET e Angular")
         {
-            tableOption
+            tableOption,
+            backendOnlyOption,
+            frontendOnlyOption
         };
 
-        rootCommand.SetHandler(async (tableName) =>
+        rootCommand.SetHandler(async (tableName, backendOnly, frontendOnly) =>
         {
             try
             {
-                await cliHandler.GenerateAsync(tableName);
+                // Validar opções mutuamente exclusivas
+                if (backendOnly && frontendOnly)
+                {
+                    Console.Error.WriteLine("Erro: --backend-only e --frontend-only não podem ser usados juntos.");
+                    Environment.ExitCode = 1;
+                    return;
+                }
+
+                await cliHandler.GenerateAsync(tableName, backendOnly, frontendOnly);
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"Erro durante a geração: {ex.Message}");
                 Environment.ExitCode = 1;
             }
-        }, tableOption);
+        }, tableOption, backendOnlyOption, frontendOnlyOption);
 
         return await rootCommand.InvokeAsync(args);
     }

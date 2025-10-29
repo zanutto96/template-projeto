@@ -22,6 +22,10 @@ namespace Gerador
             {
                line = line.Replace("#Entity#", tb.TableName);
             }
+            if (line.Contains("#entity#"))
+            {
+               line = line.Replace("#entity#", tb.TableName.ToLower());
+            }
             if (line.Contains("#EntityLowerCase#"))
             {
                line = line.Replace("#EntityLowerCase#", tb.TableName.ToLower());
@@ -62,22 +66,31 @@ namespace Gerador
                   line = line.Replace("#EntityConfiguratioPrimaryKey#", $"builder.HasKey(p => p.{primaryKey.Name});");
                }
             }
-            if (line.Contains("#EntityConfiguratioProperties#"))
+            if (line.Contains("#EntityConfiguratioRelations#"))
             {
                line = "";
-               var columns = GetEntityConfiguratioProperties(tb);
+               var relations = GetEntityConfiguratioRelations(tb);
+               foreach (var relation in relations)
+               {
+                  line += relation;
+               }
+            }
+            if (line.Contains("#EntityModelProperties#"))
+            {
+               line = "";
+               var columns = GetEntityModelProperties(tb);
                foreach (var column in columns)
                {
                   line += column;
                }
             }
-            if (line.Contains("#EntityHtmlProperties#"))
+            if (line.Contains("#EntityHtmlFormFields#"))
             {
                line = "";
-               var columns = GetEntityHtmlProperties(tb);
-               foreach (var column in columns)
+               var fields = GetEntityHtmlFormFields(tb);
+               foreach (var field in fields)
                {
-                  line += column;
+                  line += field;
                }
             }
             if (line.Contains("#EntityHtmlMaterialProperties#"))
@@ -243,74 +256,72 @@ namespace Gerador
          List<string> data = new List<string>();
          foreach (var column in tb.ColumList)
          {
-            string c = $"      {column.Name}: new FormControl(),\r\n";
+            string c = $"      {column.Name.FirstCharToLowerCase()}: new FormControl(),\r\n";
             data.Add(c);
          }
          return data;
       }
 
-      public static List<string> GetEntityHtmlProperties(TableToGenerate tb)
+      public static List<string> GetEntityHtmlBootstrapFormFields(TableToGenerate tb)
       {
          List<string> data = new List<string>();
 
          foreach (var column in tb.ColumList)
          {
-            string c = $"        <div class=\"col-md-12 px-2\">\r\n";
-            c += $"          <div class=\"form-group\">\r\n";
-            string required = column.IsNullable ? "" : "required";
-            if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar"))
+            if (!column.IsPrimaryKey)
             {
-               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-               c += $"            <input type=\"text\" class=\"form-control\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
-            }
+               string c = $"        <div class=\"form-group row\">\r\n";
+               c += $"          <label class=\"col-sm-3 col-form-label\" for=\"{column.Name.FirstCharToLowerCase()}\">{column.Name}</label>\r\n";
+               c += $"          <div class=\"col-sm-9\">\r\n";
 
-            if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime")
-            {
-               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-               c += $"            <input type=\"datetime-local\" class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" />\r\n";
-            }
-            if (column.Type.ToLower() == "bit")
-            {
-               c += $"             <input type=\"checkbox\"  formControlName=\"{column.Name}\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"/> {column.Name}\r\n";
-            }
-            if (column.IsForeignKey)
-            {
-               var dataItem = column.Name;
-               if (column.Name.ToLower().StartsWith("id"))
+               string required = column.IsNullable ? "" : "required";
+               string placeholder = $"Digite o {column.Name.FirstCharToLowerCase()}";
+
+               if (column.Type.ToLower() == "bit" || column.Type.ToLower() == "boolean" || column.Type.ToLower() == "bool" || column.Type.ToLower() == "tinyint")
                {
-                  dataItem = column.Name.Substring(2);
+                  c += $"            <div class=\"form-check\">\r\n";
+                  c += $"              <input class=\"form-check-input\" type=\"checkbox\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" id=\"{column.Name.FirstCharToLowerCase()}\">\r\n";
+                  c += $"              <label class=\"form-check-label\" for=\"{column.Name.FirstCharToLowerCase()}\">{column.Name}</label>\r\n";
+                  c += $"            </div>\r\n";
                }
-               else if (column.Name.ToLower().EndsWith("id"))
+               else if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime")
                {
-                  dataItem = column.Name.Substring(0, column.Name.Length - 2);
+                  c += $"            <input type=\"datetime-local\" class=\"form-control\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" id=\"{column.Name.FirstCharToLowerCase()}\" placeholder=\"{placeholder}\">\r\n";
                }
-               c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-               c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
-            }
-            if (!column.IsPrimaryKey && column.Type.ToLower() == "int" && !column.IsForeignKey)
-            {
-               if (column.Name.ToLower().StartsWith("id"))
+               else if (column.IsForeignKey || (column.Type.ToLower() == "int" && !column.IsPrimaryKey))
                {
-                  var dataItem = column.Name.Substring(2);
-                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-                  c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
-               }
-               else if (column.Name.ToLower().EndsWith("id"))
-               {
-                  var dataItem = column.Name.Substring(0, column.Name.Length - 2);
-                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-                  c += $"            <select  class=\"form-control\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+                  var dataItem = column.Name;
+                  if (column.Name.ToLower().StartsWith("id"))
+                  {
+                     dataItem = column.Name.Substring(2);
+                  }
+                  else if (column.Name.ToLower().EndsWith("id"))
+                  {
+                     dataItem = column.Name.Substring(0, column.Name.Length - 2);
+                  }
+                  c += $"            <select class=\"form-control\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" id=\"{column.Name.FirstCharToLowerCase()}\">\r\n";
+                  c += $"              <option value=\"\">Selecione...</option>\r\n";
+                  c += $"            </select>\r\n";
                }
                else
                {
-                  c += $"            <label class=\"form-label\">{column.Name}</label>\r\n";
-                  c += $"            <input type=\"number\" class=\"form-control\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
-               }
-            }
-            c += "          </div>\r\n";
-            c += "        </div>\r\n";
+                  string inputType = "text";
+                  if (column.Type.ToLower() == "int" || column.Type.ToLower() == "bigint" || column.Type.ToLower() == "smallint" ||
+                      column.Type.ToLower() == "decimal" || column.Type.ToLower() == "numeric" || column.Type.ToLower() == "float" ||
+                      column.Type.ToLower() == "double" || column.Type.ToLower() == "real")
+                  {
+                     inputType = "number";
+                  }
 
-            data.Add(c);
+                  c += $"            <input type=\"{inputType}\" class=\"form-control\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" id=\"{column.Name.FirstCharToLowerCase()}\" placeholder=\"{placeholder}\">\r\n";
+               }
+
+               c += $"            <small class=\"form-text text-muted\">Digite uma descrição clara e objetiva</small>\r\n";
+               c += $"          </div>\r\n";
+               c += $"        </div>\r\n";
+
+               data.Add(c);
+            }
          }
 
          return data;
@@ -328,18 +339,18 @@ namespace Gerador
             if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar"))
             {
                c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-               c += $"            <input matInput type=\"text\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+               c += $"            <input matInput type=\"text\" name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" />\r\n";
             }
 
             if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime")
             {
                c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-               c += $"            <input matInput type=\"datetime-local\" formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" />\r\n";
+               c += $"            <input matInput type=\"datetime-local\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" />\r\n";
             }
             if (column.Type.ToLower() == "bit")
             {
                     c = "<div class=\"w-full \">\r\n";
-                c += $"<mat-checkbox formControlName=\"{column.Name}\" name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\">{column.Name}</mat-checkbox>\r\n";
+                c += $"<mat-checkbox formControlName=\"{column.Name.FirstCharToLowerCase()}\" name=\"{column.Name.FirstCharToLowerCase()}\" [value]=\"model.{column.Name.FirstCharToLowerCase()}\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\">{column.Name}</mat-checkbox>\r\n";
                     c += "</div>\r\n";
                     data.Add(c);
                     continue;
@@ -356,7 +367,7 @@ namespace Gerador
                   dataItem = column.Name.Substring(0, column.Name.Length - 2);
                }
                c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-               c += $"            <select matNativeControl  formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               c += $"            <select matNativeControl  formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
             }
             if (!column.IsPrimaryKey && column.Type.ToLower() == "int" && !column.IsForeignKey)
             {
@@ -364,18 +375,18 @@ namespace Gerador
                {
                   var dataItem = column.Name.Substring(2);
                   c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-                  c += $"            <select matNativeControl formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+                  c += $"            <select matNativeControl formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
                }
                else if (column.Name.ToLower().EndsWith("id"))
                {
                   var dataItem = column.Name.Substring(0, column.Name.Length - 2);
                   c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-                  c += $"            <select  matNativeControl  formControlName=\"{column.Name}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+                  c += $"            <select  matNativeControl  formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
                }
                else
                {
                   c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-                  c += $"            <input matInput type=\"number\"  name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name}\" />\r\n";
+                  c += $"            <input matInput type=\"number\"  name=\"{column.Name.FirstCharToLowerCase()}\" {required} [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" />\r\n";
                }
             }
             //   c += "          </div>\r\n";
@@ -390,27 +401,6 @@ namespace Gerador
          return data;
       }
 
-      public static List<string> GetEntityConfiguratioProperties(TableToGenerate tb)
-      {
-         List<string> data = new List<string>();
-
-         foreach (var column in tb.ColumList)
-         {
-            string c = $"            builder.Property(p => p.{column.Name})";
-            c += $".HasColumnType(\"{column.Type}\")";
-
-            if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar") && column.Length > 0)
-               c += $".HasMaxLength({column.Length})";
-
-            if (column.IsNullable == false)
-               c += ".IsRequired()";
-            c += ";\r\n\r\n";
-            data.Add(c);
-         }
-
-         return data;
-      }
-
       public static List<string> GetEntityProperties(TableToGenerate tb)
       {
          List<string> data = new List<string>();
@@ -418,9 +408,21 @@ namespace Gerador
          foreach (var column in tb.ColumList)
          {
             string c = "        public ";
-            c += GetEntityColumnType(column) + "?";
+            c += GetEntityColumnType(column) + (column.IsNullable ? "?" : "");
             c += " " + column.Name + " { get; set; }\r\n";
             data.Add(c);
+         }
+
+         // Adicionar propriedades de navegação para FKs, evitando duplicatas
+         HashSet<string> addedNavProps = new HashSet<string>();
+         foreach (var relation in tb.tableRelations)
+         {
+            if (!addedNavProps.Contains(relation.PrimaryTableName))
+            {
+               string navProp = $"        public virtual {relation.PrimaryTableName} {relation.PrimaryTableName} {{ get; set; }}\r\n";
+               data.Add(navProp);
+               addedNavProps.Add(relation.PrimaryTableName);
+            }
          }
 
          return data;
@@ -451,7 +453,12 @@ namespace Gerador
                c += "            }\r\n\r\n";
 
             }
-            else if (cType == "bool" || cType == "int" || cType == "long")
+            else if (cType == "int" || cType == "long")
+            {
+               c = $"            if (filters.{column.Name} != null && filters.{column.Name} != 0)\r\n";
+               c += $"                queryFilter = queryFilter.Where(_ => _.{column.Name} == filters.{column.Name});\r\n";
+            }
+            else if (cType == "bool")
             {
                c = $"            if (filters.{column.Name} != null)\r\n";
                c += $"                queryFilter = queryFilter.Where(_ => _.{column.Name} == filters.{column.Name});\r\n";
@@ -505,7 +512,7 @@ namespace Gerador
          if (!string.IsNullOrEmpty(str) && char.IsUpper(str[0]))
             return str.Length == 1 ? char.ToLower(str[0]).ToString() : char.ToLower(str[0]) + str[1..];
 
-         return str;
+         return str ?? "";
       }
 
       public static List<string> GetEntityTableColumnsConfig(TableToGenerate tb)
@@ -540,6 +547,112 @@ namespace Gerador
             }
          }
          return data;
+      }
+
+      public static List<string> GetEntityConfiguratioRelations(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var relation in tb.tableRelations)
+         {
+            string c = $"            builder.HasOne(p => p.{relation.PrimaryTableName})\r\n";
+            c += $"                .WithMany()\r\n";
+            c += $"                .HasForeignKey(p => p.{relation.ReferenceColumnName})\r\n";
+            c += $"                .OnDelete(DeleteBehavior.Restrict);\r\n\r\n";
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityConfiguratioProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = "";
+            if (!column.IsPrimaryKey)
+            {
+               // Configurar propriedades básicas
+               if (!column.IsNullable)
+               {
+                  c += $"            builder.Property(p => p.{column.Name}).IsRequired();\r\n";
+               }
+
+               // Configurar tamanho máximo para strings
+               if ((column.Type.ToLower() == "char" || column.Type.ToLower() == "varchar" || column.Type.ToLower() == "nvarchar") && column.Length > 0)
+               {
+                  c += $"            builder.Property(p => p.{column.Name}).HasMaxLength({column.Length});\r\n";
+               }
+
+               if (!string.IsNullOrEmpty(c))
+               {
+                  data.Add(c);
+               }
+            }
+         }
+
+         return data;
+      }
+
+      public static List<string> GetEntityHtmlFormFields(TableToGenerate tb)
+      {
+         // Para register, usar Bootstrap form fields minimalistas
+         return GetEntityHtmlBootstrapFormFields(tb);
+      }
+
+      public static List<string> GetEntityModelProperties(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+
+         foreach (var column in tb.ColumList)
+         {
+            string c = "  ";
+            c += column.Name.FirstCharToLowerCase() + ": ";
+            c += GetTypeScriptType(column) + (column.IsNullable ? " | null" : "") + ";\n";
+            data.Add(c);
+         }
+
+         return data;
+      }
+
+      public static string GetTypeScriptType(TableColum dc)
+      {
+         string stype = "";
+         string type = dc.Type.ToLower();
+
+         // Tipos numéricos decimais
+         if (type == "decimal" || type == "numeric") { stype = "number"; }
+
+         // Tipos booleanos
+         else if (type == "bit" || type == "boolean" || type == "bool" || type == "tinyint") { stype = "boolean"; }
+
+         // Tipos de string
+         else if (type == "char" || type == "varchar" || type == "nvarchar" || type == "text" ||
+                  type == "longtext" || type == "mediumtext" || type == "tinytext" ||
+                  type == "uniqueidentifier" || type == "json") { stype = "string"; }
+
+         // Tipos de data/hora
+         else if (type == "datetime" || type == "date" || type == "timestamp" ||
+                  type == "datetime2" || type == "smalldatetime" || type == "time") { stype = "Date"; }
+
+         // Tipos de ponto flutuante
+         else if (type == "float" || type == "double" || type == "real" || type == "money" || type == "smallmoney") { stype = "number"; }
+
+         // Tipos inteiros
+         else if (type == "int" || type == "integer" || type == "smallint" || type == "mediumint") { stype = "number"; }
+
+         // Tipos inteiros grandes
+         else if (type == "bigint") { stype = "number"; }
+
+         // Tipos binários (tratados como string base64)
+         else if (type == "binary" || type == "varbinary" || type == "blob" || type == "longblob" ||
+                  type == "mediumblob" || type == "tinyblob") { stype = "string"; }
+
+         else stype = "string"; // Default para string
+
+         return stype;
       }
    }
 }

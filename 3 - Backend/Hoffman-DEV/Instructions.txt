@@ -5,11 +5,8 @@ src/app/app-routing.module.ts
 { path: 'aluno', loadChildren: () => import('./aluno/aluno.module').then(m => m.AlunoModule) },
 
 BackEnd > Api > Config > ConfigConteiner
-			services.AddScoped<AlunoService>();
-			services.AddScoped<AlunoRepository>();
 
 BackEnd > Data > Context > DataContext.cs
-public virtual DbSet<Aluno> Aluno { get; set; }
 
 To create a basic angular page follow the next steps
 1 - Open cmd into Main folder, create a new angular component for Client using AngularCLI

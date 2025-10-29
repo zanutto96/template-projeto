@@ -12,6 +12,7 @@ Uma ferramenta CLI para gerar código CRUD completo (Backend .NET + Frontend Ang
   - Filters
   - Validation
   - Configuration
+  - **Modificação automática do ConfigContainer.cs e DataContext.cs**
 
 - Geração automática de código para **Frontend Angular**:
   - Components (list e register)
@@ -20,10 +21,11 @@ Uma ferramenta CLI para gerar código CRUD completo (Backend .NET + Frontend Ang
   - Routing
   - Templates HTML
   - Styles SCSS
+  - **Modificação automática do app-routing.module.ts**
 
 - Suporte a **SQL Server** e **MySQL**
 - Detecção automática do tipo de banco pela connection string
-- Arquivo de instruções para integração manual
+- **Modificação direta dos arquivos de configuração** (não apenas instruções)
 
 ## Instalação
 
@@ -112,11 +114,19 @@ Server=localhost;Database=MeuBanco;Uid=usuario;Pwd=senha;
 
 ## Instruções de Integração
 
-Após a geração, um arquivo `Instructions.txt` é criado com as instruções para:
+O gerador **modifica automaticamente** os arquivos de configuração:
 
-1. **Frontend**: Adicionar rotas no `app.routing.module.ts`
-2. **Backend**: Registrar serviços no container de DI
-3. **Backend**: Adicionar DbSet no `DataContext.cs`
+1. **Backend (.NET):**
+   - ✅ `Api/Config/ConfigContainer.cs` - Adiciona injeção de dependência automaticamente
+   - ✅ `Data/Context/DataContext.cs` - Adiciona DbSet automaticamente
+
+2. **Frontend (Angular):**
+   - ✅ `src/app/app-routing.module.ts` - Adiciona rotas automaticamente
+
+3. **Arquivo de instruções:**
+   - 📄 `Instructions.txt` - Ainda gerado para referência e troubleshooting
+
+**Não é mais necessário copiar e colar manualmente!** O gerador faz tudo automaticamente.
 
 ## Requisitos
 

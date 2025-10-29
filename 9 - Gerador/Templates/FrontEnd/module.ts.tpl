@@ -22,16 +22,11 @@ import { MatRadioModule } from '@angular/material/radio';
     #Entity#Component,
     #Entity#ListComponent,
     #Entity#RegisterComponent,
+    #Entity#RoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    #Entity#RoutingModule,
     CommonSharedModule,
-    MatDialogModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatRadioModule,
   ]
 })
 export class #Entity#Module { }

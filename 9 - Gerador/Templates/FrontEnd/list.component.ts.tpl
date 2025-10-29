@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { #Entity#RegisterComponent } from '../#EntityLowerCase#-register/#EntityLowerCase#-register.component';
 import { TableConfig, TableColumn } from '../../shared/generic-table/generic-table.component';
 import { SharedModule } from '../../shared/shared.module';
+import { #Entity# } from './../#entity#.model';
 
 @Component({
   selector: '#EntityLowerCase#-list',
@@ -37,15 +38,15 @@ export class #Entity#ListComponent implements OnInit {
           actions: [
             {
               id: 'edit',
-              icon: 'fas fa-pencil',
-              tooltip: 'Editar',
-              cssClass: 'btn btn-primary btn-sm mx-1'
+              icon: 'fas fa-edit',
+              tooltip: 'Editar #EntityLowerCase#',
+              cssClass: 'btn btn-sm btn-outline-primary me-1'
             },
             {
               id: 'delete',
               icon: 'fas fa-trash',
-              tooltip: 'Excluir',
-              cssClass: 'btn btn-danger btn-sm mx-1'
+              tooltip: 'Excluir #EntityLowerCase#',
+              cssClass: 'btn btn-sm btn-outline-danger'
             }
           ]
         }
@@ -65,6 +66,7 @@ export class #Entity#ListComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    console.log('#Entity#ListComponent initialized');
     this.getData();
   }
 
@@ -80,14 +82,6 @@ export class #Entity#ListComponent implements OnInit {
           // Nova estrutura (após correção)
           this.vm = result.data;
           this.list = result.data.dataList;
-        } else if (result && result.result && result.result.data && result.result.data.dataList) {
-          // Estrutura antiga (para compatibilidade)
-          this.vm = result.result.data;
-          this.list = result.result.data.dataList;
-        } else if (Array.isArray(result)) {
-          // Se a resposta for diretamente um array
-          this.list = result;
-          this.vm = { dataList: result };
         } else {
           // Fallback
           this.list = [];
@@ -128,8 +122,7 @@ export class #Entity#ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         let model = {
-          #EntityRepositoryPrimaryKeyFront#: id,
-          Name: ""
+          #EntityRepositoryPrimaryKeyFront#: id
         };
         this.service.delete#Entity#(model).subscribe({
           next: () => {
@@ -163,10 +156,21 @@ export class #Entity#ListComponent implements OnInit {
     });
   }
 
+    onAdd() {
+    const dialogRef = this.dialog.open(#Entity#RegisterComponent, { data: { } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getData();
+      }
+    });
+  }
+
   onPageChanged(pageConfig: any) {
 
-    let modelFilter = {
-      PageIndex: pageConfig.PageIndex
+    let modelFilter:Partial<#Entity#> = {
+      pageIndex: pageConfig.pageIndex,
+      pageSize: pageConfig.pageSize
     };
     this.service.get#Entity#(modelFilter).subscribe({
       next: (result) => {
@@ -174,12 +178,6 @@ export class #Entity#ListComponent implements OnInit {
         if (result && result.data && result.data.dataList) {
           this.vm = result.data;
           this.list = result.data.dataList;
-        } else if (result && result.result && result.result.data && result.result.data.dataList) {
-          this.vm = result.result.data;
-          this.list = result.result.data.dataList;
-        } else if (Array.isArray(result)) {
-          this.list = result;
-          this.vm = { dataList: result };
         } else {
           this.list = [];
           this.vm = { dataList: [] };

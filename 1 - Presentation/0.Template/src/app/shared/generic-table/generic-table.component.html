@@ -5,18 +5,7 @@
     <div *ngIf="filtersVisible" class="filters-form-wrapper">
       <form [formGroup]="filtersForm" class="filters-form">
         <div class="row">
-          <!-- Global Search -->
-          <div class="col-md-12 mb-3">
-            <div class="form-group">
-              <label class="col-form-label">Global Search</label>
-              <input 
-                class="form-control" 
-                type="text" 
-                formControlName="globalSearch"  
-                placeholder="Search by any field...">
-            </div>
-          </div>
-
+        
           <!-- Column Filters -->
           <div 
             *ngFor="let column of config.columns" 
@@ -64,18 +53,29 @@
     </div>
 
     <!-- Filter Buttons -->
-    <div class="row buttons-row no-gutters mb-3">
-      <button 
-        class="col-sm-6 col-md-3 col-lg-2 filters-button" 
-        type="button" 
-        (click)="toggleFilters()">
-        {{ toggleFiltersLabel }}
+    <div class="filter-actions">
+      <button
+        type="button"
+        class="btn btn-success add-btn"
+        (click)="onAddClick()">
+        <i class="fas fa-plus"></i>
+        <span>Adicionar</span>
       </button>
-      <button 
-        class="col-sm-6 col-md-3 col-lg-2 filters-button" 
-        type="button" 
+
+      <button
+        type="button"
+        class="btn btn-outline-primary filter-btn"
+        (click)="toggleFilters()">
+        <i class="fas fa-filter"></i>
+        <span>{{ toggleFiltersLabel }}</span>
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-secondary filter-btn"
         (click)="clearFilters()">
-        Clear filters
+        <i class="fas fa-times"></i>
+        <span>Clear filters</span>
       </button>
     </div>
   </div>

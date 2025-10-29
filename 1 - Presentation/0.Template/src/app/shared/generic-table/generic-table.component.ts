@@ -116,6 +116,7 @@ export class GenericTableComponent implements OnInit {
   @Output() rowClicked = new EventEmitter<any>();
   @Output() selectionChanged = new EventEmitter<any[]>();
   @Output() pageChanged = new EventEmitter<PageEvent>();
+  @Output() addClicked = new EventEmitter<void>();
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [];
@@ -251,6 +252,10 @@ export class GenericTableComponent implements OnInit {
   onActionClick(action: string, row: any, event: Event) {
     event.stopPropagation();
     this.actionClicked.emit({ action, row });
+  }
+
+  onAddClick() {
+    this.addClicked.emit();
   }
 
   toggleRowSelection(row: any) {
