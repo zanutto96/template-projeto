@@ -1,0 +1,225 @@
+<div class="generic-table-wrapper" [ngClass]="config?.cssClass">
+  
+  <!-- Filters Section -->
+  <div *ngIf="config?.showFilters !== false" class="filters-section">
+    <div *ngIf="filtersVisible" class="filters-form-wrapper">
+      <form [formGroup]="filtersForm" class="filters-form">
+        <div class="row">
+          <!-- Global Search -->
+          <div class="col-md-12 mb-3">
+            <div class="form-group">
+              <label class="col-form-label">Global Search</label>
+              <input 
+                class="form-control" 
+                type="text" 
+                formControlName="globalSearch"  
+                placeholder="Search by any field...">
+            </div>
+          </div>
+
+          <!-- Column Filters -->
+          <div 
+            *ngFor="let column of config.columns" 
+            class="col-md-6 col-lg-4 mb-3"
+            [hidden]="column.filterable === false">
+            <div class="form-group">
+              <label class="col-form-label">{{ column.header }}</label>
+              
+              <!-- Text Filter -->
+              <input 
+                *ngIf="column.type === 'text'"
+                class="form-control" 
+                type="text" 
+                [formControlName]="column.field"
+                [placeholder]="'Filter by ' + column.header">
+              
+              <!-- Numeric/Currency Filter -->
+              <input 
+                *ngIf="column.type === 'numeric' || column.type === 'currency'"
+                class="form-control" 
+                type="number" 
+                [formControlName]="column.field"
+                [placeholder]="'Filter by ' + column.header">
+              
+              <!-- Date Filter -->
+              <input 
+                *ngIf="column.type === 'date'"
+                class="form-control" 
+                type="date" 
+                [formControlName]="column.field">
+              
+              <!-- Boolean Filter -->
+              <select 
+                *ngIf="column.type === 'boolean'"
+                class="form-control" 
+                [formControlName]="column.field">
+                <option value="">All</option>
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="row buttons-row no-gutters mb-3">
+      <button 
+        class="col-sm-6 col-md-3 col-lg-2 filters-button" 
+        type="button" 
+        (click)="toggleFilters()">
+        {{ toggleFiltersLabel }}
+      </button>
+      <button 
+        class="col-sm-6 col-md-3 col-lg-2 filters-button" 
+        type="button" 
+        (click)="clearFilters()">
+        Clear filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper table-responsive">
+    <table 
+      mat-table 
+      matSort 
+      [dataSource]="dataSource" 
+      class="table table-borderless table-sm generic-table">
+      
+      <!-- Selection Column -->
+      <ng-container matColumnDef="select" *ngIf="config?.selectable">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="toggleAllRows()"
+            [checked]="isAllSelected()"
+            [indeterminate]="isSomeSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="toggleRowSelection(row)"
+            [checked]="isRowSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- Dynamic Columns -->
+      <ng-container *ngFor="let column of config.columns" [matColumnDef]="column.field">
+        <th 
+          mat-header-cell 
+          *matHeaderCellDef 
+          [mat-sort-header]="column.sortable !== false ? column.field : ''"
+          [style.width]="column.width">
+          {{ column.header }}
+        </th>
+        <td 
+          mat-cell 
+          *matCellDef="let row" 
+          [ngClass]="column.cssClass"
+          (click)="onRowClick(row)">
+          
+          <!-- Text -->
+          <span *ngIf="column.type === 'text'">
+            {{ getColumnValue(row, column) }}
+          </span>
+
+          <!-- Numeric -->
+          <span *ngIf="column.type === 'numeric'">
+            {{ getColumnValue(row, column) | number }}
+          </span>
+
+          <!-- Currency -->
+          <span *ngIf="column.type === 'currency'" class="currency-value">
+            {{ formatCurrency(getColumnValue(row, column), column) }}
+          </span>
+
+          <!-- Date -->
+          <span *ngIf="column.type === 'date'">
+            {{ formatDate(getColumnValue(row, column), column) }}
+          </span>
+
+          <!-- Checkbox -->
+          <mat-checkbox 
+            *ngIf="column.type === 'checkbox'"
+            [checked]="getColumnValue(row, column)"
+            [disabled]="true">
+          </mat-checkbox>
+
+          <!-- Boolean -->
+          <span *ngIf="column.type === 'boolean'" class="boolean-badge">
+            <span class="badge" [ngClass]="getColumnValue(row, column) ? 'badge-success' : 'badge-secondary'">
+              {{ getColumnValue(row, column) ? 'Yes' : 'No' }}
+            </span>
+          </span>
+
+          <!-- Progress -->
+          <div *ngIf="column.type === 'progress'" class="progress-wrapper">
+            <div class="progress">
+              <div 
+                class="progress-bar" 
+                role="progressbar" 
+                [style.width.%]="getColumnValue(row, column)"
+                [style.background-color]="column.config?.progressColor"
+                [attr.aria-valuenow]="getColumnValue(row, column)" 
+                aria-valuemin="0" 
+                aria-valuemax="100">
+                <span *ngIf="column.config?.showLabel !== false">
+                  {{ getColumnValue(row, column) }}%
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thumbnail -->
+          <div *ngIf="column.type === 'thumbnail'" class="thumbnail-wrapper">
+            <div class="thumbnail-image-wrapper">
+              <cc-aspect-ratio [ratio]="column.config?.aspectRatio || {w: 1, h: 1}">
+                <cc-image-shell 
+                  animation="spinner" 
+                  [src]="getColumnValue(row, column)" 
+                  [alt]="column.header" 
+                  class="thumbnail-image">
+                </cc-image-shell>
+              </cc-aspect-ratio>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div *ngIf="column.type === 'actions'" class="actions-wrapper">
+            <ng-container *ngFor="let action of column.config?.actions">
+              <button
+                *ngIf="shouldShowAction(action, row)"
+                type="button"
+                class="btn btn-sm action-btn"
+                [ngClass]="action.cssClass || 'btn-outline-primary'"
+                [title]="action.tooltip"
+                (click)="onActionClick(action.id, row, $event)">
+                <i [class]="action.icon"></i>
+              </button>
+            </ng-container>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr 
+        mat-row 
+        *matRowDef="let row; columns: displayedColumns;" 
+        class="table-row"
+        [class.selected]="isRowSelected(row)">
+      </tr>
+    </table>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator 
+    *ngIf="config?.paginate !== false"
+    [pageSize]="config?.pageSize || 10"
+    [pageSizeOptions]="config?.pageSizeOptions || [5, 10, 25, 50, 100]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>

@@ -1,0 +1,42 @@
+<div class="row no-gutters signin-page">
+  <div class="col-md-7 col-lg-6 col-sm-12 form-section">
+    <h1 class="page-title">Hey there! Welcome back.</h1>
+    <span class="page-subtitle">
+      Enter your sign in details below so you can enjoy this Angular template.
+    </span>
+    <form class="signin-form" [formGroup]="signinForm" (ngSubmit)="onSignin()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+      </div>
+      <div class="form-call-to-actions">
+        <a class="link-text" [routerLink]="['/authentication/forgot-password']">Forgot password?</a>
+        <button class="sign-in-btn" type="submit">Sign In</button>
+      </div>
+    </form>
+    <div class="register-divider">
+      <hr class="line"><span>Or sign in using</span><hr class="line">
+    </div>
+    <div class="social-logins row no-gutters">
+      <button type="button" class="col-xs-12 col-sm-4 fb-signin">
+        Facebook
+      </button>
+      <button type="button" class="col-xs-12 col-sm-4 google-signin">
+        Google
+      </button>
+      <button type="button" class="col-xs-12 col-sm-4 twitter-signin">
+        Twitter
+      </button>
+    </div>
+    <div class="existing-account-section">
+      <span class="text">Don't have an account? <a class="link-text" [routerLink]="['/authentication/signup']">Sign up</a>.</span>
+    </div>
+  </div>
+  <div class="col-md-5 col-lg-6 d-none d-md-block image-section">
+    <cc-image-shell class="signin-image add-overlay" animation="spinner" [mode]="'cover'" [src]="'/assets/imgs/authentication/login-modal-image.jpg'" [alt]="'app image'"></cc-image-shell>
+  </div>
+</div>

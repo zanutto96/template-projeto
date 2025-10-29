@@ -1,0 +1,56 @@
+<div class="row no-gutters signup-page">
+  <div class="col-md-6 col-sm-12 form-section">
+    <h1 class="page-title">Welcome!</h1>
+    <span class="page-subtitle">
+      Sign up now to receive exclusive offers and promotions.
+      <br>Already have an account? <a class="link-text" [routerLink]="['/authentication/signin']">Log In</a>.
+    </span>
+    <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      <div class="form-row">
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="firstname">First Name</label>
+          <input type="text" class="form-control" id="firstname" formControlName="firstname">
+        </div>
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="lastname">Last Name</label>
+          <input type="text" class="form-control" id="lastname" formControlName="lastname">
+        </div>
+       </div>
+      <div class="form-row">
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+        </div>
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="country">Country</label>
+          <input type="text" class="form-control" id="country" placeholder="Where do you live?" formControlName="country">
+        </div>
+       </div>
+      <div class="form-row">
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" formControlName="password">
+        </div>
+        <div class="form-group col-lg-6 col-md-12">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+        </div>
+       </div>
+       <div class="custom-control custom-checkbox">
+         <input type="checkbox" class="custom-control-input" id="terms" formControlName="terms">
+         <label class="custom-control-label" for="terms">
+           <span class="custom-label">I agree to the Terms and Privacy Policy.</span>
+         </label>
+         <span class="form-text help-text">
+           By creating an account, you agree to the site <a href="#" class="link-text" target="_blank">Terms of Service</a> and <a href="#" class="link-text" target="_blank">Privacy Policy</a>.
+         </span>
+       </div>
+       <div class="form-call-to-actions">
+         <button class="create-account-btn" type="submit">Create account</button>
+       </div>
+    </form>
+  </div>
+  <div class="col-md-6 d-none d-md-block image-section">
+    <cc-image-shell class="signup-image add-overlay" animation="spinner" [mode]="'cover'" [src]="'/assets/imgs/authentication/signup-image.jpg'" [alt]="'app image'"></cc-image-shell>
+  </div>
+</div>

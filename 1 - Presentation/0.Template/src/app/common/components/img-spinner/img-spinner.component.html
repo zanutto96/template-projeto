@@ -1,0 +1,30 @@
+<ng-container>
+  <div>
+    <img [hidden]="showError"
+         (error)="onImageError($event, 0)"
+         (load)="onDidLoad($event)"
+         alt="{{ alt }}"
+         src="{{ url }}"
+         class="{{ classCustom }}"
+         *ngIf="!showUrl2" />
+
+    <img [hidden]="showError"
+         (error)="onImageError($event, 1)"
+         (load)="onDidLoad($event)"
+         alt="{{ alt }}"
+         src="{{ url2 }}"
+         class="{{ classCustom }}"
+         *ngIf="showUrl2" />
+
+    <img src="/assets/images/placeholder.svg"
+         class="{{ classCustom }}"
+         [hidden]="!showError" />
+    <!-- <ion-spinner *ngIf="showSpinner"
+                   [name]="name"
+                   color="primary"></ion-spinner>
+      <ion-icon *ngIf="showError"
+                name="alert-circle-outline"></ion-icon> -->
+    <!-- <mat-icon *ngIf="showSpinner" svgIcon="mat_outline:access_time"></mat-icon> -->
+    <!-- <mat-icon *ngIf="showError" svgIcon="feather:alert-circle"></mat-icon> -->
+  </div>
+</ng-container>

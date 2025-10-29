@@ -1,0 +1,114 @@
+<div class='row'>
+       <section class="col-md-12"
+                *ngIf="!IsMultiple">
+              <label *ngIf="mostrarLabel">{{ label }}</label><br *ngIf="mostrarLabel">
+              <input type='file'
+                     accept="{{accept}}"
+                     #file
+                     name="{{ctrlName}}"
+                     hidden
+                     (change)="onChange($event)" />
+              <div class="input-group">
+                     <input *ngIf="mostrarInput"
+                            type="text"
+                            readonly="readonly"
+                            [(ngModel)]='fileNameOld'
+                            (click)="file.click()"
+                            class="form-control"
+                            placeholder="Selecionar arquivo..."
+                            aria-label="Selecionar arquivo..."
+                            aria-describedby="basic-addon2" />
+                     <div class="input-group-append">
+                            <button id="{{elementId}}"
+                                    class="btn btn-primary btn-procurar"
+                                    (click)="file.click()"
+                                    type="button"
+                                    [hidden]="fileName"
+                                    *ngIf="loading == false"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button class='btn btn-primary btn-procurar'
+                                    [hidden]="!fileName"
+                                    type='button'
+                                    (click)='onDelete()'><i class="fa-solid fa-trash"></i></button>
+                            <button type="button"
+                                    class="btn btn-loading d-flex justify-content-between align-items-center gap-2"
+                                    *ngIf="loading == true">
+                                   <span class="spinner-border spinner-border-sm pr-2"
+                                         role="status"
+                                         aria-hidden="true"></span> Enviado arquivo <img src="../../../assets/img/seta-icon.svg"
+                                        alt="">
+                            </button>
+                     </div>
+              </div>
+
+              <div class="input-group"
+                   *ngIf='enableCopyLink'>
+                     <input *ngIf='fileName'
+                            type='text'
+                            id='{{fileName}}'
+                            value='{{downloadUri}}/{{folder}}/{{fileName}}'
+                            class="form-control">
+                     <div class="input-group-append">
+                            <button class='btn btn-outline-secondary'
+                                    [hidden]="!fileName"
+                                    type='button'
+                                    (click)='copyToClipboard(fileName)'
+                                    style='width:100px'>Copy</button>
+                            <a class='btn btn-outline-secondary'
+                               *ngIf='fileName'
+                               href='{{downloadUri}}/{{folder}}/{{fileName}}'
+                               target='_blank'
+                               style='width:100px'>Ver</a>
+                     </div>
+              </div>
+
+              <img *ngIf='fileName && isImage'
+                   src='{{downloadUri}}/{{folder}}/{{fileName}}'
+                   [style]='stylecss' />
+
+              <div *ngIf='pasteArea'
+                   class='upload-component-paste-area upload-component-drop-area mt-2'
+                   id='upload-component-paste-area'>
+                     <p class='muted'>{{pasteAreaText}}
+                     <p>
+              </div>
+       </section>
+
+       <section class="col-md-12"
+                *ngIf="IsMultiple">
+              <label *ngIf="mostrarLabel">{{ label }}</label><br *ngIf="mostrarLabel">
+              <input type='file'
+                     multiple
+                     accept="{{accept}}"
+                     #file
+                     name="{{ctrlName}}"
+                     hidden
+                     (change)="onChangeMultiple($event)" />
+              <div class="input-group">
+                     <input *ngIf="mostrarInput"
+                            type="text"
+                            readonly="readonly"
+                            [(ngModel)]='fileNameOld'
+                            class="form-control"
+                            placeholder="Selecionar arquivos..."
+                            style="height: 37px; margin-top: 4px;"
+                            aria-label="Selecionar arquivo..."
+                            aria-describedby="basic-addon2" />
+
+                     <button id="{{elementId}}"
+                             class="btn btn-outline-secondary"
+                             (click)="file.click()"
+                             type="button"
+                             style='width:100px'> <span class="spinner-border spinner-border-sm pr-2"
+                                  role="status"
+                                  aria-hidden="true"></span> Procurar</button>
+                     <button class='btn btn-outline-danger'
+                             [hidden]="!fileName"
+                             type='button'
+                             (click)='onDelete()'
+                             style='width:100px'>Excluir</button>
+
+
+              </div>
+
+       </section>
+</div>

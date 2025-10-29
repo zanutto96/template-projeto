@@ -1,0 +1,339 @@
+<div class="container-fluid content-wrapper">
+  
+  <div class="page-title-wrapper">
+    <h1 class="page-title">Generic Table Component</h1>
+    <span class="page-subtitle">Reusable table component with filtering, sorting, and pagination</span>
+  </div>
+
+  <!-- Introduction -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="intro-card">
+        <h3>Overview</h3>
+        <p>
+          The <code>GenericTableComponent</code> is a highly customizable and reusable table component that can be used 
+          across your entire application. It supports multiple column types, filtering, sorting, pagination, and row selection.
+        </p>
+        <h4>Features:</h4>
+        <ul>
+          <li>✅ Multiple column types (text, numeric, currency, date, boolean, checkbox, progress, thumbnail, actions)</li>
+          <li>✅ Global and per-column filtering</li>
+          <li>✅ Column sorting</li>
+          <li>✅ Pagination with customizable page sizes</li>
+          <li>✅ Row selection (single/multiple)</li>
+          <li>✅ Action buttons per row</li>
+          <li>✅ Fully responsive design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 1: Basic Table -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="example-section">
+        <h2>Example 1: Basic Table</h2>
+        <p>A simple table with text and numeric columns, filtering and pagination.</p>
+        
+        <div class="code-example mb-3">
+          <h4>Usage:</h4>
+          <pre><code>&lt;app-generic-table
+  [data]="basicTableData"
+  [config]="basicTableConfig"&gt;
+&lt;/app-generic-table&gt;</code></pre>
+        </div>
+
+        <app-generic-table
+          [data]="basicTableData"
+          [config]="basicTableConfig"
+          (rowClicked)="onRowClicked($event)">
+        </app-generic-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 2: Advanced Table -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="example-section">
+        <h2>Example 2: Advanced Table with All Column Types</h2>
+        <p>Demonstrates all available column types including currency, date, progress, boolean, thumbnail, and actions.</p>
+        
+        <div class="code-example mb-3">
+          <h4>Configuration Example:</h4>
+          <pre><code>columns: [
+  {{ '{' }} field: 'id', header: 'Order ID', type: 'text', sortable: true &#125;,
+  {{ '{' }} field: 'thumbnail', header: 'Image', type: 'thumbnail', config: {{ '{' }} aspectRatio: {{ '{' }}w: 1, h: 1&#125; &#125; &#125;,
+  {{ '{' }} field: 'product', header: 'Product', type: 'text', sortable: true &#125;,
+  {{ '{' }} field: 'price', header: 'Price', type: 'currency', sortable: true, 
+    config: {{ '{' }} currencySymbol: '$', currencyCode: 'USD' &#125; &#125;,
+  {{ '{' }} field: 'date', header: 'Order Date', type: 'date', sortable: true &#125;,
+  {{ '{' }} field: 'progress', header: 'Progress', type: 'progress', sortable: true,
+    config: {{ '{' }} showLabel: true, progressColor: '#035388' &#125; &#125;,
+  {{ '{' }} field: 'active', header: 'Active', type: 'boolean', sortable: true &#125;,
+  {{ '{' }} field: 'actions', header: 'Actions', type: 'actions',
+    config: {{ '{' }} actions: [
+      {{ '{' }} id: 'edit', icon: 'fas fa-edit', tooltip: 'Edit', cssClass: 'btn-outline-primary' &#125;,
+      {{ '{' }} id: 'delete', icon: 'fas fa-trash', tooltip: 'Delete', cssClass: 'btn-outline-danger' &#125;
+    ] &#125;
+  &#125;
+]</code></pre>
+        </div>
+
+        <app-generic-table
+          [data]="advancedTableData"
+          [config]="advancedTableConfig"
+          (actionClicked)="onActionClicked($event)"
+          (rowClicked)="onRowClicked($event)">
+        </app-generic-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 3: Selectable Table -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="example-section">
+        <h2>Example 3: Selectable Rows</h2>
+        <p>Table with checkbox column for row selection.</p>
+        
+        <div *ngIf="selectedRows.length > 0" class="alert alert-info">
+          <strong>Selected {{ selectedRows.length }} row(s):</strong>
+          <span *ngFor="let row of selectedRows; let last = last">
+            {{ row.title }}{{ last ? '' : ', ' }}
+          </span>
+        </div>
+
+        <app-generic-table
+          [data]="selectableTableData"
+          [config]="selectableTableConfig"
+          (selectionChanged)="onSelectionChanged($event)">
+        </app-generic-table>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Documentation -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="api-section">
+        <h2>API Documentation</h2>
+        
+        <h3>TableConfig Interface</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>columns</code></td>
+              <td><code>TableColumn[]</code></td>
+              <td>required</td>
+              <td>Array of column configurations</td>
+            </tr>
+            <tr>
+              <td><code>paginate</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Enable/disable pagination</td>
+            </tr>
+            <tr>
+              <td><code>pageSize</code></td>
+              <td><code>number</code></td>
+              <td><code>10</code></td>
+              <td>Initial page size</td>
+            </tr>
+            <tr>
+              <td><code>pageSizeOptions</code></td>
+              <td><code>number[]</code></td>
+              <td><code>[5, 10, 25, 50, 100]</code></td>
+              <td>Available page size options</td>
+            </tr>
+            <tr>
+              <td><code>showFilters</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Show/hide filter section</td>
+            </tr>
+            <tr>
+              <td><code>filtersVisible</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Initial visibility of filters</td>
+            </tr>
+            <tr>
+              <td><code>selectable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Enable row selection</td>
+            </tr>
+            <tr>
+              <td><code>cssClass</code></td>
+              <td><code>string</code></td>
+              <td>-</td>
+              <td>Custom CSS classes</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">TableColumn Interface</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>field</code></td>
+              <td><code>string</code></td>
+              <td>required</td>
+              <td>Field name in data object</td>
+            </tr>
+            <tr>
+              <td><code>header</code></td>
+              <td><code>string</code></td>
+              <td>required</td>
+              <td>Column header text</td>
+            </tr>
+            <tr>
+              <td><code>type</code></td>
+              <td><code>ColumnType</code></td>
+              <td>required</td>
+              <td>Column type (see types below)</td>
+            </tr>
+            <tr>
+              <td><code>sortable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Enable column sorting</td>
+            </tr>
+            <tr>
+              <td><code>filterable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Show filter for column</td>
+            </tr>
+            <tr>
+              <td><code>width</code></td>
+              <td><code>string</code></td>
+              <td>-</td>
+              <td>Column width (e.g., '100px', '20%')</td>
+            </tr>
+            <tr>
+              <td><code>cssClass</code></td>
+              <td><code>string</code></td>
+              <td>-</td>
+              <td>Custom CSS classes for cells</td>
+            </tr>
+            <tr>
+              <td><code>config</code></td>
+              <td><code>object</code></td>
+              <td>-</td>
+              <td>Type-specific configuration</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Column Types</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Config Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>text</code></td>
+              <td>Plain text display</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><code>numeric</code></td>
+              <td>Formatted number</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><code>currency</code></td>
+              <td>Formatted currency value</td>
+              <td><code>currencySymbol</code>, <code>currencyCode</code></td>
+            </tr>
+            <tr>
+              <td><code>date</code></td>
+              <td>Formatted date</td>
+              <td><code>dateFormat</code></td>
+            </tr>
+            <tr>
+              <td><code>checkbox</code></td>
+              <td>Disabled checkbox (read-only)</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><code>boolean</code></td>
+              <td>Yes/No badge</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td><code>progress</code></td>
+              <td>Progress bar</td>
+              <td><code>showLabel</code>, <code>progressColor</code></td>
+            </tr>
+            <tr>
+              <td><code>thumbnail</code></td>
+              <td>Image thumbnail</td>
+              <td><code>aspectRatio</code></td>
+            </tr>
+            <tr>
+              <td><code>actions</code></td>
+              <td>Action buttons</td>
+              <td><code>actions[]</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="mt-4">Events</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Event</th>
+              <th>Payload</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>(actionClicked)</code></td>
+              <td><code>{{ '{' }} action: string, row: any &#125;</code></td>
+              <td>Emitted when an action button is clicked</td>
+            </tr>
+            <tr>
+              <td><code>(rowClicked)</code></td>
+              <td><code>any</code></td>
+              <td>Emitted when a row is clicked</td>
+            </tr>
+            <tr>
+              <td><code>(selectionChanged)</code></td>
+              <td><code>any[]</code></td>
+              <td>Emitted when row selection changes</td>
+            </tr>
+            <tr>
+              <td><code>(pageChanged)</code></td>
+              <td><code>PageEvent</code></td>
+              <td>Emitted when page changes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

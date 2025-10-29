@@ -76,3 +76,11 @@ Thumbs.db
 *.rej
 .DS_Store
 Thumbs.db
+/.vs
+/2 - Authentication/keycloak-26.4.2/data/h2
+/2 - Authentication/keycloak-26.4.2/lib/lib
+/2 - Authentication/keycloak-26.4.2/lib/quarkus
+/2 - Authentication/keycloak-26.4.2/lib
+/2 - Authentication/keycloak-26.4.2.zip
+/3 - Backend/.vs
+/3 - Backend/Api/upload/foto
