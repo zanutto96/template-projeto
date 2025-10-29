@@ -1,4 +1,2 @@
-﻿.mat-column-buttons {
-    width: 120px;
-    text-align: right;
-}
+﻿// Generic table styles are handled by the component itself
+// Add any custom styles specific to this list component here

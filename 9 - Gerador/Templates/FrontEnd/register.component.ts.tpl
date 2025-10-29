@@ -1,12 +1,15 @@
-﻿import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+﻿import { Component, EventEmitter, Inject, inject, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { #Entity#Service } from '../#EntityLowerCase#.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: '#EntityLowerCase#-register',
   templateUrl: './#EntityLowerCase#-register.component.html',
-  styleUrls: ['./#EntityLowerCase#-register.component.scss']
+  styleUrls: ['./#EntityLowerCase#-register.component.scss'],
+  imports: [
+    ReactiveFormsModule
+  ]
 })
 export class #Entity#RegisterComponent implements OnInit {
 
@@ -17,8 +20,12 @@ export class #Entity#RegisterComponent implements OnInit {
   public model: any = {};
   public showSelect = false;
 
-  constructor(private service: #Entity#Service,  public dialogRef: MatDialogRef<#Entity#RegisterComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+    private service: #Entity#Service = inject(#Entity#Service);
+
+  constructor(
+    public dialogRef: MatDialogRef<#Entity#RegisterComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.form = new FormGroup(this.getFormControls());
   }
 
@@ -33,39 +40,61 @@ export class #Entity#RegisterComponent implements OnInit {
     return formControls;
   }
 
-  onCancel() {
-    this.response.emit();
-  }
+  onSave() {
+    if (this.form.valid) {
+      this.model = { ...this.model, ...this.form.value };
 
-  onSave(form: any) { 
-    if (this.model.#EntityRepositoryPrimaryKeyFront#) {
-      this.service.savePartial('#Entity#', this.model).subscribe((data : any) => {
-        this.dialogRef.close(true);
-      });
-    } else {
-      this.service.save('#Entity#', this.model).subscribe((data: any) => {
-        this.dialogRef.close(true);
-      });
+      if (this.model.#EntityRepositoryPrimaryKeyFront#) {
+        this.service.update#Entity#(this.model).subscribe({
+          next: (data: any) => {
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error('Erro ao atualizar:', error);
+          }
+        });
+      } else {
+        this.service.save#Entity#(this.model).subscribe({
+          next: (data: any) => {
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            console.error('Erro ao salvar:', error);
+          }
+        });
+      }
     }
   }
 
   getData() {
     var filters = {
-      #EntityRepositoryPrimaryKey#: this.data.id
-      }
+      #EntityRepositoryPrimaryKey#: this.data?.id || this.id
+    };
     if (filters.#EntityRepositoryPrimaryKey# > 0) {
-      this.service.get('#Entity#', 'getById', filters).subscribe((result: any) => {
-        this.model = result.data; 
-        this.showSelect = true;
+      this.service.get#Entity#ById(filters.#EntityRepositoryPrimaryKey#).subscribe({
+        next: (result: any) => {
+          // Verificar se a resposta tem a estrutura nova ou antiga
+          if (result && result.data) {
+            this.model = result.data;
+          } else if (result && result.result && result.result.data) {
+            this.model = result.result.data;
+          } else {
+            this.model = result;
+          }
+          this.form.patchValue(this.model);
+          this.showSelect = true;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar dados:', error);
+          this.showSelect = true;
+        }
       });
     } else {
-        this.showSelect = true;
+      this.showSelect = true;
     }
   }
 
   onNoClick(): void {
     this.dialogRef.close(false);
   }
-
-
 }

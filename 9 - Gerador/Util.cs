@@ -116,11 +116,14 @@ namespace Gerador
                   line += column;
                }
             }
-            if (line.Contains("#EntityHtmlDisplayedColumnsMaterialProperties#"))
+            if (line.Contains("#EntityTableColumnsConfig#"))
             {
                line = "";
-               line = GetEntityHtmlDisplayedColumnsMaterialProperties(tb);
-
+               var columns = GetEntityTableColumnsConfig(tb);
+               foreach (var column in columns)
+               {
+                  line += column;
+               }
             }
             if (line.Contains("#EntityHtmlTableRowProperties#"))
             {
@@ -497,12 +500,46 @@ namespace Gerador
          return stype;
       }
 
-      public static string? FirstCharToLowerCase(this string? str)
+      public static string FirstCharToLowerCase(this string? str)
       {
          if (!string.IsNullOrEmpty(str) && char.IsUpper(str[0]))
             return str.Length == 1 ? char.ToLower(str[0]).ToString() : char.ToLower(str[0]) + str[1..];
 
          return str;
+      }
+
+      public static List<string> GetEntityTableColumnsConfig(TableToGenerate tb)
+      {
+         List<string> data = new List<string>();
+         foreach (var column in tb.ColumList)
+         {
+            if (!column.IsPrimaryKey)
+            {
+               string columnType = "text";
+               if (column.Type.ToLower() == "int" || column.Type.ToLower() == "bigint" || column.Type.ToLower() == "smallint" || column.Type.ToLower() == "decimal" || column.Type.ToLower() == "numeric" || column.Type.ToLower() == "float" || column.Type.ToLower() == "double")
+               {
+                  columnType = "numeric";
+               }
+               else if (column.Type.ToLower() == "bit" || column.Type.ToLower() == "boolean")
+               {
+                  columnType = "boolean";
+               }
+               else if (column.Type.ToLower() == "date" || column.Type.ToLower() == "datetime" || column.Type.ToLower() == "datetime2" || column.Type.ToLower() == "timestamp")
+               {
+                  columnType = "date";
+               }
+
+               string c = $"      {{\n";
+               c += $"        field: '{column.Name.FirstCharToLowerCase()}',\n";
+               c += $"        header: '{column.Name}',\n";
+               c += $"        type: '{columnType}',\n";
+               c += $"        sortable: true,\n";
+               c += $"        filterable: true\n";
+               c += $"      }},\n";
+               data.Add(c);
+            }
+         }
+         return data;
       }
    }
 }

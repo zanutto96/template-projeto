@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'app/common/services/api.service';
 
 import { #Entity#RegisterComponent } from './#EntityLowerCase#-register/#EntityLowerCase#-register.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class #Entity#Component implements OnInit {
   currentView: any = 'showList';
   id: any;
-  constructor(private service: ApiService,  public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void { }
 

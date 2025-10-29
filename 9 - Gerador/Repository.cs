@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Gerador.Model;
-using Microsoft.VisualBasic.ApplicationServices;
 using MySql.Data.MySqlClient;
 
 namespace Gerador

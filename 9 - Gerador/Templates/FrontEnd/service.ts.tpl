@@ -1,31 +1,31 @@
 ﻿import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { ApiService } from 'app/common/services/api.service';
+import { ApiService } from '../common/services/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class #Entity#Service {
 
-  constructor(private api: ApiService) { } 
+  constructor(private api: ApiService) { }
 
-  get(resource: any, route: any, filters: any, showLoading: boolean = true): Observable<any> {
-
-    return this.api.get(resource, route, filters, showLoading);
-  }
-   
-  save(resource: any, model: any): Observable<any> {
-
-    return this.api.post(resource, model);
+  get#Entity#(filters?: any): Observable<any> {
+    return this.api.get('#Entity#', 'GetData', filters);
   }
 
-  savePartial(resource: any, model: any): Observable<any> {
-
-    return this.api.put(resource, model);
+  get#Entity#ById(id: number): Observable<any> {
+    return this.api.get('#Entity#', 'GetById', { id });
   }
 
-  delete(resource: any, model: any): Observable<any> {
+  save#Entity#(model: any): Observable<any> {
+    return this.api.post('#Entity#', model);
+  }
 
-    return this.api.delete(resource, model);
+  update#Entity#(model: any): Observable<any> {
+    return this.api.put('#Entity#', model);
+  }
+
+  delete#Entity#(model: any): Observable<any> {
+    return this.api.delete('#Entity#', model);
   }
 }

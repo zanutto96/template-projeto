@@ -18,7 +18,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [Route("GetData")]
-        public async Task<dynamic> Get([FromQuery] #Entity#Filter filters)
+        public async Task<IActionResult> Get([FromQuery] #Entity#Filter filters)
         {
             HttpResult result = new HttpResult();
             try
@@ -35,7 +35,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [Route("GetDataItem")]
-        public async Task<dynamic> GetDataItem([FromQuery] #Entity#Filter filters)
+        public async Task<IActionResult> GetDataItem([FromQuery] #Entity#Filter filters)
         {
             HttpResult result = new HttpResult();
             try
@@ -52,7 +52,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public async Task<dynamic> GetById([FromQuery] #Entity#Filter filters)
+        public async Task<IActionResult> GetById([FromQuery] #Entity#Filter filters)
         {
             HttpResult result = new HttpResult();
             try
@@ -68,7 +68,7 @@ namespace Api.Controllers
         }
 
         [HttpPost] 
-        public async Task<dynamic> Save([FromBody] #Entity# model)
+        public async Task<IActionResult> Save([FromBody] #Entity# model)
         {
             HttpResult result = new HttpResult();
             try
@@ -92,7 +92,7 @@ namespace Api.Controllers
         }
 
         [HttpPut] 
-        public async Task<dynamic> SavePartial([FromBody] #Entity# model)
+        public async Task<IActionResult> SavePartial([FromBody] #Entity# model)
         {
             HttpResult result = new HttpResult();
             try
@@ -116,7 +116,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete] 
-        public async Task<dynamic> Remove([FromBody] #Entity# model)
+        public async Task<IActionResult> Remove([FromBody] #Entity# model)
         {
             HttpResult result = new HttpResult();
             try
