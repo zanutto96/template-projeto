@@ -18,6 +18,11 @@ import { NumberBR } from "./pipes/numberBR.pipe";
 import { PercentBR } from "./pipes/percentBR.pipe";
 import { SafePipe } from "./pipes/safe.pipe";
 import { SplitPipe } from "./pipes/split.pipe";
+import { GenericTableModule } from "./components/generic-table/generic-table.module";
+import { AlertTemplateComponent } from "./components/alert-template/alert-template.component";
+import { NotificationTemplateComponent } from "./components/notification-template/notification-template.component";
+import { ShellModule } from "../shell/shell.module";
+import { FileUploaderDirective } from "./directives/file-uploader/file-uploader.directive";
 
 
 @NgModule({
@@ -29,9 +34,14 @@ import { SplitPipe } from "./pipes/split.pipe";
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    CustomSelectComponent
+    CustomSelectComponent,
+    GenericTableModule,
+    ShellModule
   ],
   declarations: [
+    AlertTemplateComponent,
+    FileUploaderDirective,
+    NotificationTemplateComponent,
     UploadCustomComponent,
     MakePaginationComponent,
     CurrencyBR,
@@ -48,8 +58,13 @@ import { SplitPipe } from "./pipes/split.pipe";
   providers: [
   ],
   exports: [
+    MatIconModule,
+    AlertTemplateComponent,
+    NotificationTemplateComponent,
+    GenericTableModule,
     UploadCustomComponent,
     ImgSpinnerComponent,
+    FileUploaderDirective,
     MakePaginationComponent,
     CurrencyBR,
     NumberBR,

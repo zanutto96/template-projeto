@@ -4,7 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { SharedModule } from '../shared/shared.module';
+import { CommonSharedModule } from '../common/common-shared.module';
+import { ShellModule } from '../shell/shell.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const authenticationRoutes: Routes = [
   {
@@ -34,7 +36,9 @@ export const authenticationRoutes: Routes = [
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CommonSharedModule,
+    ShellModule,
+    ReactiveFormsModule,
     RouterModule.forChild(authenticationRoutes)
   ]
 })

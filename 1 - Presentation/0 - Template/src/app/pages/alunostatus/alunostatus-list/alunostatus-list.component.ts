@@ -3,16 +3,17 @@ import Swal from 'sweetalert2';
 import { AlunoStatusService } from '../alunostatus.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AlunoStatusRegisterComponent } from '../alunostatus-register/alunostatus-register.component';
-import { TableConfig, TableColumn } from '../../shared/generic-table/generic-table.component';
-import { SharedModule } from '../../shared/shared.module';
 import { AlunoStatus } from './../alunostatus.model';
+import { CommonSharedModule } from '../../../common/common-shared.module';
+import { TableConfig } from '../../../common/components/generic-table/generic-table.component';
+
 
 @Component({
   selector: 'alunostatus-list',
   templateUrl: './alunostatus-list.component.html',
   styleUrls: ['./alunostatus-list.component.scss'],
   imports: [
-    SharedModule
+    CommonSharedModule
   ]
 })
 export class AlunoStatusListComponent implements OnInit {

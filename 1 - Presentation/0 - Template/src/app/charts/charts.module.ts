@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 
 import { ChartsDataService } from './charts.service';
 
@@ -16,6 +15,7 @@ import { provideCharts, withDefaultRegisterables, BaseChartDirective } from 'ng2
 // ngx-charts - lib: https://swimlane.gitbook.io/ngx-charts/
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxChartsPageComponent } from './ngx-charts/ngx-charts-page.component';
+import { CommonSharedModule } from '../common/common-shared.module';
 
 export const chartsRoutes: Route[] = [
   {
@@ -52,7 +52,7 @@ export const chartsRoutes: Route[] = [
   imports: [
     RouterModule.forChild(chartsRoutes),
     CommonModule,
-    SharedModule,
+    CommonSharedModule,
     NgxEchartsModule,
     NgxChartsModule,
     BaseChartDirective

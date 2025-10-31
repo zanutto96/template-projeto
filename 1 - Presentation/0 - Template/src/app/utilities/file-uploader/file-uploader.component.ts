@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NotificationTemplateComponent } from '../../shared/notification-template/notification-template.component';
+import { NotificationTemplateComponent } from '../../common/components/notification-template/notification-template.component';
 
 @Component({
   selector: 'app-file-uploader',

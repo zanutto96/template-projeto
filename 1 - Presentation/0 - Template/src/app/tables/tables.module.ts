@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Route, RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -11,6 +10,10 @@ import { TableDataService } from './table-data.service';
 import { ExtendedTablesComponent } from './extended-tables/extended-tables.component';
 import { SmartTablesComponent } from './smart-tables/smart-tables.component';
 import { ExternalFiltersTableComponent } from './external-filters-table/external-filters-table.component';
+import { CommonSharedModule } from '../common/common-shared.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 export const tablesRoutes: Route[] = [
   {
@@ -57,7 +60,10 @@ export const tablesRoutes: Route[] = [
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CommonSharedModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
     DragDropModule,
     RouterModule.forChild(tablesRoutes)
   ],

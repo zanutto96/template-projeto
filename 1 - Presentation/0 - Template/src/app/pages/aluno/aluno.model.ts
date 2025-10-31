@@ -1,4 +1,4 @@
-﻿import { BaseFilter } from '../common/models/base-filter.model';
+﻿import { BaseFilter } from '../../common/models/base-filter.model';
 
 export interface Aluno extends BaseFilter {
   alunoFormacaoId: number | null;

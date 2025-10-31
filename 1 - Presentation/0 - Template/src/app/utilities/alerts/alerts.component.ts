@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertTemplateComponent } from '../../shared/alert-template/alert-template.component';
+import { AlertTemplateComponent } from '../../common/components/alert-template/alert-template.component';
 
 @Component({
   selector: 'app-alerts',

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,7 +47,6 @@ echarts.use([
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SharedModule,
     CoreModule,
     AuthenticationModule,
     BrowserAnimationsModule,

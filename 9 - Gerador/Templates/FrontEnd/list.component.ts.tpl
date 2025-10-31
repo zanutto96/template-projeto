@@ -3,17 +3,16 @@ import Swal from 'sweetalert2';
 import { #Entity#Service } from '../#EntityLowerCase#.service';
 import { MatDialog } from '@angular/material/dialog';
 import { #Entity#RegisterComponent } from '../#EntityLowerCase#-register/#EntityLowerCase#-register.component';
-import { TableConfig, TableColumn } from '../../shared/generic-table/generic-table.component';
 import { SharedModule } from '../../shared/shared.module';
 import { #Entity# } from './../#entity#.model';
-import { CommonSharedModule } from '../../common/common-shared.module';
+import { CommonSharedModule } from '../../../common/common-shared.module';
+import { TableConfig } from '../../../common/components/generic-table/generic-table.component';
 
 @Component({
   selector: '#EntityLowerCase#-list',
   templateUrl: './#EntityLowerCase#-list.component.html',
   styleUrls: ['./#EntityLowerCase#-list.component.scss'],
   imports: [
-    SharedModule,
     CommonSharedModule
   ]
 })

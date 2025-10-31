@@ -1,7 +1,7 @@
 ﻿
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from '../common/services/api.service';
+import { ApiService } from '../../common/services/api.service';
 import { #Entity# } from './#entity#.model';
 
 @Injectable({

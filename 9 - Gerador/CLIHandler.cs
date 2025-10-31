@@ -95,7 +95,7 @@ public class CLIHandler
 
     private void SetupPaths()
     {
-        _spaUI = Path.Combine(_settings.FrontPath, "src", "app");
+        _spaUI = Path.Combine(_settings.FrontPath, "src", "app", "pages");
         _controllers = Path.Combine(_settings.BackPath, "Api", "Controllers");
         _service = Path.Combine(_settings.BackPath, "Service");
         _serviceBusiness = Path.Combine(_settings.BackPath, "Service", "Business");

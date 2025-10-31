@@ -4,7 +4,7 @@ import { AlunoService } from '../aluno.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { Aluno } from './../aluno.model';
-import { CommonSharedModule } from '../../common/common-shared.module';
+import { CommonSharedModule } from '../../../common/common-shared.module';
 
 @Component({
   selector: 'aluno-register',

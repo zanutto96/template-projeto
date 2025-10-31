@@ -2,14 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListsComponent } from './lists/lists.component';
 import { CardsComponent } from './cards/cards.component';
-import { CarouselComponent } from './carousel/carousel.component';
-import { SharedModule } from '../shared/shared.module';
 import { Route, RouterModule } from '@angular/router';
-import { TabsetsComponent } from './tabsets/tabsets.component';
 import { GenericTableExampleComponent } from './generic-table-example/generic-table-example.component';
 
 import { CardsResolver, ListsResolver } from './components.resolver';
 import { ComponentsService } from './components.service';
+import { CommonSharedModule } from '../common/common-shared.module';
 
 export const componentsRoutes: Route[] = [
   {
@@ -32,14 +30,6 @@ export const componentsRoutes: Route[] = [
     }
   },
   {
-    path: 'carousel',
-    component: CarouselComponent
-  },
-  {
-    path: 'tabsets',
-    component: TabsetsComponent
-  },
-  {
     path: 'generic-table',
     component: GenericTableExampleComponent
   }
@@ -49,13 +39,11 @@ export const componentsRoutes: Route[] = [
   declarations: [
     ListsComponent, 
     CardsComponent, 
-    CarouselComponent, 
-    TabsetsComponent,
     GenericTableExampleComponent
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CommonSharedModule,
     RouterModule.forChild(componentsRoutes)
   ],
   providers: [

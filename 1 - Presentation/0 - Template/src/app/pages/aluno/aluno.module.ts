@@ -7,7 +7,7 @@ import { AlunoComponent } from './aluno.component';
 import { AlunoListComponent } from './aluno-list/aluno-list.component';
 import { AlunoRegisterComponent } from './aluno-register/aluno-register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonSharedModule } from '../common/common-shared.module';
+import { CommonSharedModule } from '../../common/common-shared.module';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';

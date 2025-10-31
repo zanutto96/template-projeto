@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EcommerceDashboardComponent } from './ecommerce-dashboard/ecommerce-dashboard.component';
 import { Route, RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
 
 // echarts - lib: https://github.com/xieziyu/ngx-echarts
 import { NgxEchartsModule } from 'ngx-echarts';
 import { DashboardsService } from './dashboards.service';
 import { CrmDashboardComponent } from './crm-dashboard/crm-dashboard.component';
 import { EcommerceDashboardResolver, CrmDashboardResolver } from './dashboards.resolver';
+import { CommonSharedModule } from '../common/common-shared.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ShellModule } from '../shell/shell.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export const dashboardRoutes: Route[] = [
   {
@@ -38,7 +43,12 @@ export const dashboardRoutes: Route[] = [
     CommonModule,
     RouterModule.forChild(dashboardRoutes),
     NgxEchartsModule.forChild(),
-    SharedModule
+    CommonSharedModule,
+    MatPaginatorModule,
+    ShellModule,
+    MatTableModule,
+    MatSortModule,
+    NgbModule,
   ],
   providers: [
     DashboardsService,

@@ -1,6 +1,5 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -31,6 +30,9 @@ import { ColorPalettesService } from './color-palettes/color-palettes.service';
 import { CustomIconsService } from './custom-icons/custom-icons.service';
 import { MobileLayoutComponent } from './layouts/mobile/mobile-layout.component';
 import { DynamicLayoutComponent } from './layouts/dynamic/dynamic-layout.component';
+import { CommonSharedModule } from '../common/common-shared.module';
+import { ShellModule } from '../shell/shell.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { DynamicLayoutComponent } from './layouts/dynamic/dynamic-layout.compone
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule,
+    CommonSharedModule,
+    ShellModule,
+    ReactiveFormsModule,
     // Material CDK modules
     PortalModule,
     // To detect screen size changes

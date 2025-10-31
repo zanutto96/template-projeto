@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TableColumn, TableConfig, TableAction } from '../../shared/generic-table/generic-table.component';
+import { TableColumn, TableConfig, TableAction } from '../../common/components/generic-table/generic-table.component';
 
 @Component({
   selector: 'app-generic-table-example',

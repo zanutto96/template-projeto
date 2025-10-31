@@ -12,9 +12,15 @@
         <div class="col-md-7 col-sm-12">
           <div class="form-group">
             <label>Countries</label>
-            <input class="form-control" type="text" placeholder="Where do you live?" [formControl]="selectedCountry" [matAutocomplete]="countriesAutocomplete">
-            <mat-autocomplete #countriesAutocomplete="matAutocomplete" class="countries-autocomplete">
-              <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name">
+            <input class="form-control"
+                   type="text"
+                   placeholder="Where do you live?"
+                   [formControl]="selectedCountry"
+                   [matAutocomplete]="countriesAutocomplete">
+            <mat-autocomplete #countriesAutocomplete="matAutocomplete"
+                              class="countries-autocomplete">
+              <mat-option *ngFor="let country of filteredCountries | async"
+                          [value]="country.name">
                 {{ country.name }}
               </mat-option>
             </mat-autocomplete>
@@ -29,12 +35,22 @@
         <div class="col-md-7 col-sm-12">
           <div class="form-group">
             <label>Task Owner</label>
-            <input class="form-control" type="text" placeholder="Select a task owner" [matAutocomplete]="taskOwnerAutocomplete" [formControl]="selectedTaskOwner">
-            <mat-autocomplete #taskOwnerAutocomplete="matAutocomplete" class="task-owners-autocomplete">
-              <mat-option class="d-flex" *ngFor="let user of filteredTaskOwners | async" [value]="user.name">
+            <input class="form-control"
+                   type="text"
+                   placeholder="Select a task owner"
+                   [matAutocomplete]="taskOwnerAutocomplete"
+                   [formControl]="selectedTaskOwner">
+            <mat-autocomplete #taskOwnerAutocomplete="matAutocomplete"
+                              class="task-owners-autocomplete">
+              <mat-option class="d-flex"
+                          *ngFor="let user of filteredTaskOwners | async"
+                          [value]="user.name">
                 <div class="image-container">
                   <cc-aspect-ratio [ratio]="{w: 1, h: 1}">
-                    <cc-image-shell class="user-image" animation="spinner" [src]="user.picture" [alt]="'user image'"></cc-image-shell>
+                    <cc-image-shell class="user-image"
+                                    animation="spinner"
+                                    [src]="user.picture"
+                                    [alt]="'user image'"></cc-image-shell>
                   </cc-aspect-ratio>
                 </div>
                 <span class="user-name">{{user.name}} |</span>
@@ -58,7 +74,12 @@
         <div class="col-md-7 col-sm-12">
           <div class="form-group">
             <label>Select a fruit</label>
-            <input type="text" class="form-control" placeholder="What's your favourite fruit?" [formControl]="selectedFruit" [ngbTypeahead]="searchFruits" [resultFormatter]="fruitsFormatter"/>
+            <input type="text"
+                   class="form-control"
+                   placeholder="What's your favourite fruit?"
+                   [formControl]="selectedFruit"
+                   [ngbTypeahead]="searchFruits"
+                   [resultFormatter]="fruitsFormatter" />
           </div>
         </div>
       </div>
@@ -70,19 +91,31 @@
         <div class="col-md-7 col-sm-12">
           <div class="form-group">
             <label>Select a user</label>
-            <input type="text" class="form-control" [formControl]="selectedUser" [ngbTypeahead]="searchUsers" [resultTemplate]="usersAutocompleteTemplate" [inputFormatter]="usersFormatter"/>
+            <input type="text"
+                   class="form-control"
+                   [formControl]="selectedUser"
+                   [ngbTypeahead]="searchUsers"
+                   [resultTemplate]="usersAutocompleteTemplate"
+                   [inputFormatter]="usersFormatter" />
           </div>
         </div>
       </div>
 
-      <ng-template #usersAutocompleteTemplate let-user="result" let-term="term">
+      <ng-template #usersAutocompleteTemplate
+                   let-user="result"
+                   let-term="term">
         <div class="user-autocomplete-result">
           <div class="image-container">
             <cc-aspect-ratio [ratio]="{w: 1, h: 1}">
-              <cc-image-shell class="user-image" animation="spinner" [src]="user['picture']" [alt]="'user image'"></cc-image-shell>
+              <cc-image-shell class="user-image"
+                              animation="spinner"
+                              [src]="user['picture']"
+                              [alt]="'user image'"></cc-image-shell>
             </cc-aspect-ratio>
           </div>
-          <ngb-highlight class="name-container" [result]="user.name" [term]="term"></ngb-highlight>
+          <ngb-highlight class="name-container"
+                         [result]="user.name"
+                         [term]="term"></ngb-highlight>
         </div>
       </ng-template>
 
