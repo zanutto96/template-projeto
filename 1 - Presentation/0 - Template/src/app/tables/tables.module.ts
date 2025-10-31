@@ -7,13 +7,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RegularTablesComponent } from './regular-tables/regular-tables.component';
 import { RegularTablesResolver, ExtendedTablesResolver, SmartTablesResolver, ExternalFiltersTableResolver } from './tables.resolver';
 import { TableDataService } from './table-data.service';
-import { ExtendedTablesComponent } from './extended-tables/extended-tables.component';
 import { SmartTablesComponent } from './smart-tables/smart-tables.component';
 import { ExternalFiltersTableComponent } from './external-filters-table/external-filters-table.component';
 import { CommonSharedModule } from '../common/common-shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbDatepickerModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 export const tablesRoutes: Route[] = [
   {
@@ -25,28 +27,28 @@ export const tablesRoutes: Route[] = [
     path: 'regular-tables',
     component: RegularTablesComponent,
     resolve: {
-      tableData : RegularTablesResolver
+      tableData: RegularTablesResolver
     }
   },
   {
     path: 'extended-tables',
-    component: ExtendedTablesComponent,
+    loadComponent: () => import('./extended-tables/extended-tables.component').then(m => m.ExtendedTablesComponent),
     resolve: {
-      tableData : ExtendedTablesResolver
+      tableData: ExtendedTablesResolver
     }
   },
   {
     path: 'smart-tables',
     component: SmartTablesComponent,
     resolve: {
-      tableData : SmartTablesResolver
+      tableData: SmartTablesResolver
     }
   },
   {
     path: 'external-filters-tables',
     component: ExternalFiltersTableComponent,
     resolve: {
-      tableData : ExternalFiltersTableResolver
+      tableData: ExternalFiltersTableResolver
     }
   }
 ];
@@ -54,7 +56,6 @@ export const tablesRoutes: Route[] = [
 @NgModule({
   declarations: [
     RegularTablesComponent,
-    ExtendedTablesComponent,
     SmartTablesComponent,
     ExternalFiltersTableComponent
   ],
@@ -64,7 +65,11 @@ export const tablesRoutes: Route[] = [
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    MatCheckboxModule,
     DragDropModule,
+    NgbDatepickerModule,
+    MatProgressBarModule,
+    NgbModule,
     RouterModule.forChild(tablesRoutes)
   ],
   providers: [

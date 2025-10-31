@@ -41,7 +41,7 @@
     @include table-basic-styles();
     text-align: center;
 
-    th.mat-header-cell {
+    th.mdc-header-cell {
       border: none;
       text-align: center;
     }
@@ -55,21 +55,21 @@
     }
 
     // tbody
-    .mat-cell {
+    .mat-mdc-cell {
       vertical-align: middle;
 
-      &[cell-name = 'status'] {
-        &[cell-value = 'ACTIVE'] {
+      &[cell-name="status"] {
+        &[cell-value="ACTIVE"] {
           color: var(--status-active-color);
           letter-spacing: 1px;
         }
-        &[cell-value = 'INACTIVE'] {
+        &[cell-value="INACTIVE"] {
           color:  var(--status-inactive-color);
           letter-spacing: 1px;
         }
       }
 
-      &[cell-name = 'subscription'] {
+      &[cell-name="subscription"] {
         .subscription-plan {
           display: block;
 

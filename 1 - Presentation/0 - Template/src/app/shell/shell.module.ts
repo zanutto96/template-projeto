@@ -2,14 +2,12 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AspectRatioComponent } from './aspect-ratio/aspect-ratio.component';
-import { ImageShellComponent } from './image-shell/image-shell.component';
 import { TextShellComponent } from './text-shell/text-shell.component';
 import { AppShellConfig } from './config/app-shell.config';
 
 @NgModule({
   declarations: [
     AspectRatioComponent,
-    ImageShellComponent,
     TextShellComponent
   ],
   providers: [
@@ -28,7 +26,6 @@ import { AppShellConfig } from './config/app-shell.config';
   ],
   exports: [
     AspectRatioComponent,
-    ImageShellComponent,
     TextShellComponent
   ]
 })

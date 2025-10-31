@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// Angular Material
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { AuthenticationModule } from './authentication/authentication.module';
 
 // echarts - lib: https://github.com/xieziyu/ngx-echarts
@@ -50,6 +53,7 @@ echarts.use([
     CoreModule,
     AuthenticationModule,
     BrowserAnimationsModule,
+    MatNativeDateModule,
     NgxEchartsModule.forRoot({
       echarts
     })

@@ -48,19 +48,20 @@
   .table-wrapper {
     @include table-basic-styles();
 
-    th.mat-header-cell {
+    th.mat-mdc-header-cell {
       border: none;
     }
 
     .user-image-wrapper {
       width: calc(var(--page-spacing) * 4);
+      height: calc(var(--page-spacing) * 4);
       margin: 0px var(--page-spacing);
     }
     .user-image {
       border-radius: 50%;
     }
 
-    td.mat-cell {
+    td.mat-mdc-cell {
       vertical-align: middle;
 
       &[cell-name = 'status'] {
@@ -89,7 +90,7 @@
 
 ::ng-deep {
   mat-checkbox {
-    .mat-checkbox-layout {
+    .mat-mdc-checkbox-layout {
       margin: auto;
     }
   }

@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ImageShellComponent } from '../../shell/image-shell/image-shell.component';
+import { ShellModule } from '../../shell/shell.module';
+import { NgbProgressbarModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-extended-tables',
@@ -7,7 +14,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: [
     './extended-tables.component.scss',
   ],
-  standalone: false
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    ImageShellComponent,
+    ShellModule,
+    NgbProgressbarModule,
+    NgbPopoverModule
+  ]
 })
 export class ExtendedTablesComponent {
 

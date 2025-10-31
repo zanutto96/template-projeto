@@ -23,6 +23,7 @@ import { AlertTemplateComponent } from "./components/alert-template/alert-templa
 import { NotificationTemplateComponent } from "./components/notification-template/notification-template.component";
 import { ShellModule } from "../shell/shell.module";
 import { FileUploaderDirective } from "./directives/file-uploader/file-uploader.directive";
+import { ImageShellComponent } from "../shell/image-shell/image-shell.component";
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { FileUploaderDirective } from "./directives/file-uploader/file-uploader.
     MatInputModule,
     CustomSelectComponent,
     GenericTableModule,
-    ShellModule
+    ShellModule,
+    ImageShellComponent
   ],
   declarations: [
     AlertTemplateComponent,
@@ -75,7 +77,8 @@ import { FileUploaderDirective } from "./directives/file-uploader/file-uploader.
     MaskMoedaInputDirective,
     SplitPipe,
     CharacterCounterDirective,
-    CustomSelectComponent
+    CustomSelectComponent,
+    ImageShellComponent
   ]
 })
 

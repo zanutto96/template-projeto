@@ -4,7 +4,7 @@
 
 <ng-template #condensedToolbar>
   <mat-toolbar class="top-navbar-toolbar">
-    <mat-toolbar-row>
+    <mat-toolbar-row >
       <div class="navbar-branding">
         <button class="btn toggle-sidenav-btn" type="button" (click)="toggleMainMenu()">
           <i class="fa fa-bars"></i>
@@ -38,7 +38,7 @@
 
 <ng-template #expandedToolbar>
   <mat-toolbar class="top-navbar-toolbar">
-    <mat-toolbar-row>
+    <mat-toolbar-row class="d-flex">
       <div class="navbar-branding">
         <mat-icon class="brand-logo" svgIcon="angular-logo-2"></mat-icon>
         <button class="btn toggle-sidenav-btn" type="button" (click)="toggleMainMenu()">
