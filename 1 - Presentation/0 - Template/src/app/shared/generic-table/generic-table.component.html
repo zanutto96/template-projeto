@@ -1,6 +1,6 @@
 <div class="generic-table-wrapper" [ngClass]="config?.cssClass">
   
-  <!-- Filters Section -->
+  <!-- Seção de Filtros -->
   @if (config?.showFilters !== false) {
   <div class="filters-section">
     @if (filtersVisible) {
@@ -8,7 +8,7 @@
       <form [formGroup]="filtersForm" class="filters-form">
         <div class="row">
         
-          <!-- Column Filters -->
+          <!-- Filtros por Coluna -->
           @for (column of config.columns; track column.field) {
           <div 
             class="col-md-6 col-lg-4 mb-3"
@@ -16,25 +16,25 @@
             <div class="form-group">
               <label class="col-form-label">{{ column.header }}</label>
               
-              <!-- Text Filter -->
+              <!-- Filtro de Texto -->
               @if (column.type === 'text') {
               <input 
                 class="form-control" 
                 type="text" 
                 [formControlName]="column.field"
-                [placeholder]="'Filter by ' + column.header">
+                [placeholder]="'Filtrar por ' + column.header">
               }
               
-              <!-- Numeric/Currency Filter -->
+              <!-- Filtro Numérico/Monetário -->
               @if (column.type === 'numeric' || column.type === 'currency') {
               <input 
                 class="form-control" 
                 type="number" 
                 [formControlName]="column.field"
-                [placeholder]="'Filter by ' + column.header">
+                [placeholder]="'Filtrar por ' + column.header">
               }
               
-              <!-- Date Filter -->
+              <!-- Filtro de Data -->
               @if (column.type === 'date') {
               <input 
                 class="form-control" 
@@ -42,14 +42,14 @@
                 [formControlName]="column.field">
               }
               
-              <!-- Boolean Filter -->
+              <!-- Filtro Booleano -->
               @if (column.type === 'boolean') {
               <select 
                 class="form-control" 
                 [formControlName]="column.field">
-                <option value="">All</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
+                <option value="">Todos</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
               </select>
               }
             </div>
@@ -60,7 +60,7 @@
     </div>
     }
 
-    <!-- Filter Buttons -->
+    <!-- Botões de Filtro -->
     <div class="filter-actions">
       <button
         type="button"
@@ -83,13 +83,13 @@
         class="btn btn-outline-secondary filter-btn"
         (click)="clearFilters()">
         <i class="fas fa-times"></i>
-        <span>Clear filters</span>
+        <span>Limpar filtros</span>
       </button>
     </div>
   </div>
   }
 
-  <!-- Table -->
+  <!-- Tabela -->
   <div class="table-wrapper table-responsive">
     <table 
       mat-table 
@@ -97,7 +97,7 @@
       [dataSource]="dataSource" 
       class="table table-borderless table-sm generic-table">
       
-      <!-- Selection Column -->
+      <!-- Coluna de Seleção -->
       @if (config?.selectable) {
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
@@ -117,7 +117,7 @@
       </ng-container>
       }
 
-      <!-- Dynamic Columns -->
+      <!-- Colunas Dinâmicas -->
       @for (column of config.columns; track column.field) {
       <ng-container [matColumnDef]="column.field">
         <th 
@@ -133,28 +133,28 @@
           [ngClass]="column.cssClass"
           (click)="onRowClick(row)">
           
-          <!-- Text -->
+          <!-- Texto -->
           @if (column.type === 'text') {
           <span>
             {{ getColumnValue(row, column) }}
           </span>
           }
 
-          <!-- Numeric -->
+          <!-- Numérico -->
           @if (column.type === 'numeric') {
           <span>
             {{ getColumnValue(row, column) | number }}
           </span>
           }
 
-          <!-- Currency -->
+          <!-- Monetário -->
           @if (column.type === 'currency') {
           <span class="currency-value">
             {{ formatCurrency(getColumnValue(row, column), column) }}
           </span>
           }
 
-          <!-- Date -->
+          <!-- Data -->
           @if (column.type === 'date') {
           <span>
             {{ formatDate(getColumnValue(row, column), column) }}
@@ -169,16 +169,16 @@
           </mat-checkbox>
           }
 
-          <!-- Boolean -->
+          <!-- Booleano -->
           @if (column.type === 'boolean') {
           <span class="boolean-badge">
             <span class="badge" [ngClass]="getColumnValue(row, column) ? 'badge-success' : 'badge-secondary'">
-              {{ getColumnValue(row, column) ? 'Yes' : 'No' }}
+              {{ getColumnValue(row, column) ? 'Sim' : 'Não' }}
             </span>
           </span>
           }
 
-          <!-- Progress -->
+          <!-- Progresso -->
           @if (column.type === 'progress') {
           <div class="progress-wrapper">
             <div class="progress">
@@ -200,7 +200,7 @@
           </div>
           }
 
-          <!-- Thumbnail -->
+          <!-- Miniatura -->
           @if (column.type === 'thumbnail') {
           <div class="thumbnail-wrapper">
             <div class="thumbnail-image-wrapper">
@@ -216,7 +216,7 @@
           </div>
           }
 
-          <!-- Actions -->
+          <!-- Ações -->
           @if (column.type === 'actions') {
           <div class="actions-wrapper">
             @for (action of column.config?.actions; track action.id) {
@@ -245,7 +245,7 @@
     </table>
   </div>
 
-  <!-- Paginator -->
+  <!-- Paginador -->
   @if (config?.paginate !== false) {
   <mat-paginator 
     [pageSize]="config?.pageSize || 10"

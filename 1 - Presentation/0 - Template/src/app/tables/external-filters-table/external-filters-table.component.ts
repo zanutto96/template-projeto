@@ -108,7 +108,7 @@ export class ExternalFiltersTableComponent implements OnInit {
   // Show or hide the available filters
   toggleFilters(): void {
     this.filtersVisible = !this.filtersVisible;
-    this.toggleFiltersLabel = this.filtersVisible ? 'Hide filters' : 'Show filters';
+    this.toggleFiltersLabel = this.filtersVisible ?  'Esconder filtros' : 'Mostrar filtros';
   }
 
   // Reset all the filters values

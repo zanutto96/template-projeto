@@ -41,300 +41,300 @@ export class AlunoListComponent implements OnInit {
         sortable: true,
         filterable: true
       },
-      {
-        field: 'areaAtuacaoEmpresa',
-        header: 'AreaAtuacaoEmpresa',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'areaAtuacaoId',
-        header: 'AreaAtuacaoId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'bairro',
-        header: 'Bairro',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'cargoQueOcupa',
-        header: 'CargoQueOcupa',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'cEP',
-        header: 'CEP',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'comentario',
-        header: 'Comentario',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'cPF',
-        header: 'CPF',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'dataAlteracao',
-        header: 'DataAlteracao',
-        type: 'date',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'dataCadastro',
-        header: 'DataCadastro',
-        type: 'date',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'dataNascimento',
-        header: 'DataNascimento',
-        type: 'date',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehEmail',
-        header: 'EhEmail',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehExAluno',
-        header: 'EhExAluno',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehFalecido',
-        header: 'EhFalecido',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehMalaDireta',
-        header: 'EhMalaDireta',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehMkt',
-        header: 'EhMkt',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'ehSMS',
-        header: 'EhSMS',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'email',
-        header: 'Email',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'endereco',
-        header: 'Endereco',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'enderecoComplemento',
-        header: 'EnderecoComplemento',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'enderecoNumero',
-        header: 'EnderecoNumero',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'estado',
-        header: 'Estado',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'estadoCivilId',
-        header: 'EstadoCivilId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'localNascimento',
-        header: 'LocalNascimento',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nivelFormacaoId',
-        header: 'NivelFormacaoId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomeCompleto',
-        header: 'NomeCompleto',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomeCracha',
-        header: 'NomeCracha',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomeEmpresaOndeTrabalha',
-        header: 'NomeEmpresaOndeTrabalha',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomeMae',
-        header: 'NomeMae',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomePai',
-        header: 'NomePai',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'nomeSocial',
-        header: 'NomeSocial',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'rG',
-        header: 'RG',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'sexoId',
-        header: 'SexoId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'telCelular',
-        header: 'TelCelular',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'telComercial',
-        header: 'TelComercial',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'telResidencial',
-        header: 'TelResidencial',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'temWhatsApp',
-        header: 'TemWhatsApp',
-        type: 'boolean',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'uRLFotoAluno',
-        header: 'URLFotoAluno',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'uRLInstagran',
-        header: 'URLInstagran',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'uRLLinkedin',
-        header: 'URLLinkedin',
-        type: 'text',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'usuarioAlteracaoId',
-        header: 'UsuarioAlteracaoId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'usuarioCadastroId',
-        header: 'UsuarioCadastroId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
-      {
-        field: 'usuarioId',
-        header: 'UsuarioId',
-        type: 'numeric',
-        sortable: true,
-        filterable: true
-      },
+      // {
+      //   field: 'areaAtuacaoEmpresa',
+      //   header: 'AreaAtuacaoEmpresa',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'areaAtuacaoId',
+      //   header: 'AreaAtuacaoId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'bairro',
+      //   header: 'Bairro',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'cargoQueOcupa',
+      //   header: 'CargoQueOcupa',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'cEP',
+      //   header: 'CEP',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'comentario',
+      //   header: 'Comentario',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'cPF',
+      //   header: 'CPF',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'dataAlteracao',
+      //   header: 'DataAlteracao',
+      //   type: 'date',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'dataCadastro',
+      //   header: 'DataCadastro',
+      //   type: 'date',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'dataNascimento',
+      //   header: 'DataNascimento',
+      //   type: 'date',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehEmail',
+      //   header: 'EhEmail',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehExAluno',
+      //   header: 'EhExAluno',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehFalecido',
+      //   header: 'EhFalecido',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehMalaDireta',
+      //   header: 'EhMalaDireta',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehMkt',
+      //   header: 'EhMkt',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'ehSMS',
+      //   header: 'EhSMS',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'email',
+      //   header: 'Email',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'endereco',
+      //   header: 'Endereco',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'enderecoComplemento',
+      //   header: 'EnderecoComplemento',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'enderecoNumero',
+      //   header: 'EnderecoNumero',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'estado',
+      //   header: 'Estado',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'estadoCivilId',
+      //   header: 'EstadoCivilId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'localNascimento',
+      //   header: 'LocalNascimento',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nivelFormacaoId',
+      //   header: 'NivelFormacaoId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomeCompleto',
+      //   header: 'NomeCompleto',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomeCracha',
+      //   header: 'NomeCracha',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomeEmpresaOndeTrabalha',
+      //   header: 'NomeEmpresaOndeTrabalha',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomeMae',
+      //   header: 'NomeMae',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomePai',
+      //   header: 'NomePai',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'nomeSocial',
+      //   header: 'NomeSocial',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'rG',
+      //   header: 'RG',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'sexoId',
+      //   header: 'SexoId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'telCelular',
+      //   header: 'TelCelular',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'telComercial',
+      //   header: 'TelComercial',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'telResidencial',
+      //   header: 'TelResidencial',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'temWhatsApp',
+      //   header: 'TemWhatsApp',
+      //   type: 'boolean',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'uRLFotoAluno',
+      //   header: 'URLFotoAluno',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'uRLInstagran',
+      //   header: 'URLInstagran',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'uRLLinkedin',
+      //   header: 'URLLinkedin',
+      //   type: 'text',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'usuarioAlteracaoId',
+      //   header: 'UsuarioAlteracaoId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'usuarioCadastroId',
+      //   header: 'UsuarioCadastroId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
+      // {
+      //   field: 'usuarioId',
+      //   header: 'UsuarioId',
+      //   type: 'numeric',
+      //   sortable: true,
+      //   filterable: true
+      // },
 
       {
         field: 'actions',

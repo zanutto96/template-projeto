@@ -125,7 +125,7 @@ export class GenericTableComponent implements OnInit, OnChanges {
   displayedColumns: string[] = [];
   filtersForm: FormGroup;
   filtersVisible = false;
-  toggleFiltersLabel = 'Show filters';
+  toggleFiltersLabel = 'Mostrar filtros';
   selectedRows = new Set<any>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -187,7 +187,7 @@ export class GenericTableComponent implements OnInit, OnChanges {
     // Definir visibilidade inicial dos filtros
     if (this.config?.filtersVisible !== undefined) {
       this.filtersVisible = this.config.filtersVisible;
-      this.toggleFiltersLabel = this.filtersVisible ? 'Hide filters' : 'Show filters';
+      this.toggleFiltersLabel = this.filtersVisible ? 'Esconder filtros' : 'Mostrar filtros';
     }
   }
 
@@ -252,7 +252,7 @@ export class GenericTableComponent implements OnInit, OnChanges {
 
   toggleFilters() {
     this.filtersVisible = !this.filtersVisible;
-    this.toggleFiltersLabel = this.filtersVisible ? 'Hide filters' : 'Show filters';
+    this.toggleFiltersLabel = this.filtersVisible ? 'Esconder filtros' : 'Mostrar filtros';
   }
 
   onRowClick(row: any) {
