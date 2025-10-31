@@ -1,6 +1,6 @@
 ﻿<div class="card border-0 rounded-0">
   <div class="card-header">
-    <h5 class="card-title mb-0">Lista de #Entity#</h5>
+    <h5 class="card-title mb-0">Lista de AlunoStatus</h5>
   </div>
   <div class="card-body position-relative">
     @if (loading) {
@@ -8,10 +8,10 @@
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Carregando...</span>
         </div>
-        <p class="mt-2">Carregando #Entity#...</p>
+        <p class="mt-2">Carregando AlunoStatus...</p>
       </div>
     }
-    @if (list) {
+    @if (list && list.length > 0) {
       <app-generic-table
         [data]="list"
         [config]="tableConfig"
@@ -24,8 +24,8 @@
     } @else if (!loading) {
       <div class="text-center py-4">
         <i class="fas fa-users fa-3x text-muted mb-3"></i>
-        <h5 class="text-muted">Nenhum #Entity# encontrado</h5>
-        <p class="text-muted">Clique em "Adicionar" para cadastrar o primeiro #Entity#.</p>
+        <h5 class="text-muted">Nenhum AlunoStatus encontrado</h5>
+        <p class="text-muted">Clique em "Adicionar" para cadastrar o primeiro AlunoStatus.</p>
       </div>
     }
   </div>

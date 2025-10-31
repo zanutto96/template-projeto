@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { #Entity#Service } from '../#EntityLowerCase#.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { CommonSharedModule } from '../../common/common-shared.module';
 import { #Entity# } from './../#entity#.model';
 
 @Component({
@@ -11,7 +12,8 @@ import { #Entity# } from './../#entity#.model';
   styleUrls: ['./#EntityLowerCase#-register.component.scss'],
   imports: [
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    CommonSharedModule
   ]
 })
 export class #Entity#RegisterComponent implements OnInit {

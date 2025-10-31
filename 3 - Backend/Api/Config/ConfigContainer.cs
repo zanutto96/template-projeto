@@ -18,6 +18,10 @@ namespace Api
 
 
          //Gerador Adicionar aqui
+services.AddScoped<AlunoService>();
+services.AddScoped<AlunoRepository>();
+services.AddScoped<AlunoService>();
+services.AddScoped<AlunoRepository>();
 services.AddScoped<AlunoStatusService>();
 services.AddScoped<AlunoStatusRepository>();
 services.AddScoped<AlunoStatusService>();

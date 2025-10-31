@@ -1,0 +1,444 @@
+﻿<div class="register-modal-container">
+  <!-- Modal Header -->
+  <div class="modal-header-custom">
+    <h2 class="modal-title">
+      {{ model.alunoId ? 'Editar' : 'Novo' }} Aluno
+    </h2>
+    <button type="button"
+            class="btn-close-custom"
+            (click)="onNoClick()"
+            aria-label="Fechar">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Modal Body -->
+  <div class="modal-body-custom">
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="register-form">
+
+      <!-- Form Section -->
+      <div class="form-section">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="alunoFormacaoId">AlunoFormacaoId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="alunoFormacaoId"
+              name="alunoFormacaoId"
+              tableName="AlunoFormacao"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.alunoFormacaoId"
+              id="alunoFormacaoId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="alunoStatusId">AlunoStatusId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="alunoStatusId"
+              name="alunoStatusId"
+              tableName="AlunoStatus"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.alunoStatusId"
+              id="alunoStatusId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="areaAtuacaoEmpresa">AreaAtuacaoEmpresa</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="areaAtuacaoEmpresa"  name="areaAtuacaoEmpresa" [(ngModel)]="model.areaAtuacaoEmpresa" id="areaAtuacaoEmpresa" placeholder="Digite o areaAtuacaoEmpresa">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="areaAtuacaoId">AreaAtuacaoId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="areaAtuacaoId"
+              name="areaAtuacaoId"
+              tableName="AreaAtuacao"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.areaAtuacaoId"
+              id="areaAtuacaoId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="bairro">Bairro</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="bairro"  name="bairro" [(ngModel)]="model.bairro" id="bairro" placeholder="Digite o bairro">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="cargoQueOcupa">CargoQueOcupa</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="cargoQueOcupa"  name="cargoQueOcupa" [(ngModel)]="model.cargoQueOcupa" id="cargoQueOcupa" placeholder="Digite o cargoQueOcupa">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="cEP">CEP</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="cEP"  name="cEP" [(ngModel)]="model.cEP" id="cEP" placeholder="Digite o cEP">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="comentario">Comentario</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="comentario"  name="comentario" [(ngModel)]="model.comentario" id="comentario" placeholder="Digite o comentario">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="cPF">CPF</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="cPF" required name="cPF" [(ngModel)]="model.cPF" id="cPF" placeholder="Digite o cPF">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="dataAlteracao">DataAlteracao</label>
+          <div class="col-sm-9">
+            <input type="datetime-local" class="form-control" formControlName="dataAlteracao"  name="dataAlteracao" [(ngModel)]="model.dataAlteracao" id="dataAlteracao" placeholder="Digite o dataAlteracao">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="dataCadastro">DataCadastro</label>
+          <div class="col-sm-9">
+            <input type="datetime-local" class="form-control" formControlName="dataCadastro"  name="dataCadastro" [(ngModel)]="model.dataCadastro" id="dataCadastro" placeholder="Digite o dataCadastro">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="dataNascimento">DataNascimento</label>
+          <div class="col-sm-9">
+            <input type="datetime-local" class="form-control" formControlName="dataNascimento"  name="dataNascimento" [(ngModel)]="model.dataNascimento" id="dataNascimento" placeholder="Digite o dataNascimento">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehEmail">EhEmail</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehEmail"  name="ehEmail" [(ngModel)]="model.ehEmail" id="ehEmail">
+              <label class="form-check-label" for="ehEmail">EhEmail</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehExAluno">EhExAluno</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehExAluno"  name="ehExAluno" [(ngModel)]="model.ehExAluno" id="ehExAluno">
+              <label class="form-check-label" for="ehExAluno">EhExAluno</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehFalecido">EhFalecido</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehFalecido"  name="ehFalecido" [(ngModel)]="model.ehFalecido" id="ehFalecido">
+              <label class="form-check-label" for="ehFalecido">EhFalecido</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehMalaDireta">EhMalaDireta</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehMalaDireta"  name="ehMalaDireta" [(ngModel)]="model.ehMalaDireta" id="ehMalaDireta">
+              <label class="form-check-label" for="ehMalaDireta">EhMalaDireta</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehMkt">EhMkt</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehMkt"  name="ehMkt" [(ngModel)]="model.ehMkt" id="ehMkt">
+              <label class="form-check-label" for="ehMkt">EhMkt</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="ehSMS">EhSMS</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="ehSMS"  name="ehSMS" [(ngModel)]="model.ehSMS" id="ehSMS">
+              <label class="form-check-label" for="ehSMS">EhSMS</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="email">Email</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="email" required name="email" [(ngModel)]="model.email" id="email" placeholder="Digite o email">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="endereco">Endereco</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="endereco"  name="endereco" [(ngModel)]="model.endereco" id="endereco" placeholder="Digite o endereco">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="enderecoComplemento">EnderecoComplemento</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="enderecoComplemento"  name="enderecoComplemento" [(ngModel)]="model.enderecoComplemento" id="enderecoComplemento" placeholder="Digite o enderecoComplemento">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="enderecoNumero">EnderecoNumero</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="enderecoNumero"  name="enderecoNumero" [(ngModel)]="model.enderecoNumero" id="enderecoNumero" placeholder="Digite o enderecoNumero">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="estado">Estado</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="estado"  name="estado" [(ngModel)]="model.estado" id="estado" placeholder="Digite o estado">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="estadoCivilId">EstadoCivilId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="estadoCivilId"
+              name="estadoCivilId"
+              tableName="EstadoCivil"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.estadoCivilId"
+              id="estadoCivilId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="localNascimento">LocalNascimento</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="localNascimento"  name="localNascimento" [(ngModel)]="model.localNascimento" id="localNascimento" placeholder="Digite o localNascimento">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nivelFormacaoId">NivelFormacaoId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="nivelFormacaoId"
+              name="nivelFormacaoId"
+              tableName="NivelFormacao"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.nivelFormacaoId"
+              id="nivelFormacaoId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomeCompleto">NomeCompleto</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomeCompleto" required name="nomeCompleto" [(ngModel)]="model.nomeCompleto" id="nomeCompleto" placeholder="Digite o nomeCompleto">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomeCracha">NomeCracha</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomeCracha"  name="nomeCracha" [(ngModel)]="model.nomeCracha" id="nomeCracha" placeholder="Digite o nomeCracha">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomeEmpresaOndeTrabalha">NomeEmpresaOndeTrabalha</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomeEmpresaOndeTrabalha"  name="nomeEmpresaOndeTrabalha" [(ngModel)]="model.nomeEmpresaOndeTrabalha" id="nomeEmpresaOndeTrabalha" placeholder="Digite o nomeEmpresaOndeTrabalha">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomeMae">NomeMae</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomeMae"  name="nomeMae" [(ngModel)]="model.nomeMae" id="nomeMae" placeholder="Digite o nomeMae">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomePai">NomePai</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomePai"  name="nomePai" [(ngModel)]="model.nomePai" id="nomePai" placeholder="Digite o nomePai">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="nomeSocial">NomeSocial</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="nomeSocial"  name="nomeSocial" [(ngModel)]="model.nomeSocial" id="nomeSocial" placeholder="Digite o nomeSocial">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="rG">RG</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="rG"  name="rG" [(ngModel)]="model.rG" id="rG" placeholder="Digite o rG">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="sexoId">SexoId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="sexoId"
+              name="sexoId"
+              tableName="Sexo"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.sexoId"
+              id="sexoId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="telCelular">TelCelular</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="telCelular"  name="telCelular" [(ngModel)]="model.telCelular" id="telCelular" placeholder="Digite o telCelular">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="telComercial">TelComercial</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="telComercial"  name="telComercial" [(ngModel)]="model.telComercial" id="telComercial" placeholder="Digite o telComercial">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="telResidencial">TelResidencial</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="telResidencial"  name="telResidencial" [(ngModel)]="model.telResidencial" id="telResidencial" placeholder="Digite o telResidencial">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="temWhatsApp">TemWhatsApp</label>
+          <div class="col-sm-9">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" formControlName="temWhatsApp"  name="temWhatsApp" [(ngModel)]="model.temWhatsApp" id="temWhatsApp">
+              <label class="form-check-label" for="temWhatsApp">TemWhatsApp</label>
+            </div>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="uRLFotoAluno">URLFotoAluno</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="uRLFotoAluno"  name="uRLFotoAluno" [(ngModel)]="model.uRLFotoAluno" id="uRLFotoAluno" placeholder="Digite o uRLFotoAluno">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="uRLInstagran">URLInstagran</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="uRLInstagran"  name="uRLInstagran" [(ngModel)]="model.uRLInstagran" id="uRLInstagran" placeholder="Digite o uRLInstagran">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="uRLLinkedin">URLLinkedin</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="uRLLinkedin"  name="uRLLinkedin" [(ngModel)]="model.uRLLinkedin" id="uRLLinkedin" placeholder="Digite o uRLLinkedin">
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="usuarioAlteracaoId">UsuarioAlteracaoId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="usuarioAlteracaoId"
+              name="usuarioAlteracaoId"
+              tableName="UsuarioAlteracao"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.usuarioAlteracaoId"
+              id="usuarioAlteracaoId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="usuarioCadastroId">UsuarioCadastroId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="usuarioCadastroId"
+              name="usuarioCadastroId"
+              tableName="UsuarioCadastro"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.usuarioCadastroId"
+              id="usuarioCadastroId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="usuarioId">UsuarioId</label>
+          <div class="col-sm-9">
+            <custom-select
+              formControlName="usuarioId"
+              name="usuarioId"
+              tableName="Usuario"
+              tableLabelFieldName="name"
+              [(ngModel)]="model.usuarioId"
+              id="usuarioId"
+              placeholder="Selecione...">
+            </custom-select>
+            <small class="form-text text-muted">Digite uma descrição clara e objetiva</small>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button"
+                class="btn btn-outline-secondary"
+                (click)="onNoClick()">
+          <i class="fas fa-times"></i>
+          Cancelar
+        </button>
+
+        <button type="submit"
+                class="btn btn-primary"
+                [disabled]="form.invalid">
+          <i class="fas fa-save"></i>
+          {{ model.alunoId ? 'Atualizar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

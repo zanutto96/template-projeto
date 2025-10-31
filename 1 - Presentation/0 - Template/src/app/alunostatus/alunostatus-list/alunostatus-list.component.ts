@@ -1,23 +1,21 @@
-﻿import { Component, EventEmitter, OnInit, Output,inject } from '@angular/core';
+﻿import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import Swal from 'sweetalert2';
-import { #Entity#Service } from '../#EntityLowerCase#.service';
+import { AlunoStatusService } from '../alunostatus.service';
 import { MatDialog } from '@angular/material/dialog';
-import { #Entity#RegisterComponent } from '../#EntityLowerCase#-register/#EntityLowerCase#-register.component';
+import { AlunoStatusRegisterComponent } from '../alunostatus-register/alunostatus-register.component';
 import { TableConfig, TableColumn } from '../../shared/generic-table/generic-table.component';
 import { SharedModule } from '../../shared/shared.module';
-import { #Entity# } from './../#entity#.model';
-import { CommonSharedModule } from '../../common/common-shared.module';
+import { AlunoStatus } from './../alunostatus.model';
 
 @Component({
-  selector: '#EntityLowerCase#-list',
-  templateUrl: './#EntityLowerCase#-list.component.html',
-  styleUrls: ['./#EntityLowerCase#-list.component.scss'],
+  selector: 'alunostatus-list',
+  templateUrl: './alunostatus-list.component.html',
+  styleUrls: ['./alunostatus-list.component.scss'],
   imports: [
-    SharedModule,
-    CommonSharedModule
+    SharedModule
   ]
 })
-export class #Entity#ListComponent implements OnInit {
+export class AlunoStatusListComponent implements OnInit {
 
   @Output() edit = new EventEmitter<any>();
 
@@ -29,7 +27,14 @@ export class #Entity#ListComponent implements OnInit {
 
   public tableConfig: TableConfig = {
     columns: [
-      #EntityTableColumnsConfig#
+      {
+        field: 'descricao',
+        header: 'Descricao',
+        type: 'text',
+        sortable: true,
+        filterable: true
+      },
+
       {
         field: 'actions',
         header: 'Ações',
@@ -41,13 +46,13 @@ export class #Entity#ListComponent implements OnInit {
             {
               id: 'edit',
               icon: 'fas fa-edit',
-              tooltip: 'Editar #EntityLowerCase#',
+              tooltip: 'Editar alunostatus',
               cssClass: 'btn btn-sm btn-outline-primary me-1'
             },
             {
               id: 'delete',
               icon: 'fas fa-trash',
-              tooltip: 'Excluir #EntityLowerCase#',
+              tooltip: 'Excluir alunostatus',
               cssClass: 'btn btn-sm btn-outline-danger'
             }
           ]
@@ -61,14 +66,14 @@ export class #Entity#ListComponent implements OnInit {
     filtersVisible: false
   };
 
-    private service: #Entity#Service = inject(#Entity#Service);
+  private service: AlunoStatusService = inject(AlunoStatusService);
 
   constructor(
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    console.log('#Entity#ListComponent initialized');
+    console.log('AlunoStatusListComponent initialized');
     this.getData();
   }
 
@@ -79,7 +84,7 @@ export class #Entity#ListComponent implements OnInit {
       ...filters
     };
     this.loading = true;
-    this.service.get#Entity#(filters).subscribe({
+    this.service.getAlunoStatus(filters).subscribe({
       next: (result) => {
         // Verificar se a resposta tem a estrutura nova ou antiga
         if (result && result.data && result.data.dataList) {
@@ -105,10 +110,10 @@ export class #Entity#ListComponent implements OnInit {
   onActionClicked(event: { action: string; row: any }) {
     switch (event.action) {
       case 'edit':
-        this.onEdit(event.row.#EntityRepositoryPrimaryKeyFront#);
+        this.onEdit(event.row.alunoStatusId);
         break;
       case 'delete':
-        this.onDelete(event.row.#EntityRepositoryPrimaryKeyFront#);
+        this.onDelete(event.row.alunoStatusId);
         break;
     }
   }
@@ -126,9 +131,9 @@ export class #Entity#ListComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         let model = {
-          #EntityRepositoryPrimaryKeyFront#: id
+          alunoStatusId: id
         };
-        this.service.delete#Entity#(model).subscribe({
+        this.service.deleteAlunoStatus(model).subscribe({
           next: () => {
             this.getData();
             Swal.fire(
@@ -151,7 +156,7 @@ export class #Entity#ListComponent implements OnInit {
   }
 
   onEdit(id: any) {
-    const dialogRef = this.dialog.open(#Entity#RegisterComponent, { data: { id: id }, width: '80vw' });
+    const dialogRef = this.dialog.open(AlunoStatusRegisterComponent, { data: { id: id } });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -160,8 +165,8 @@ export class #Entity#ListComponent implements OnInit {
     });
   }
 
-    onAdd() {
-    const dialogRef = this.dialog.open(#Entity#RegisterComponent, { data: { }, width: '80vw' });
+  onAdd() {
+    const dialogRef = this.dialog.open(AlunoStatusRegisterComponent, { data: {} });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -172,11 +177,12 @@ export class #Entity#ListComponent implements OnInit {
 
   onPageChanged(pageConfig: any) {
 
-    let modelFilter:Partial<#Entity#> = {
+    let modelFilter: Partial<AlunoStatus> = {
       pageIndex: pageConfig.pageIndex,
       pageSize: pageConfig.pageSize
     };
-    this.service.get#Entity#(modelFilter).subscribe({
+
+    this.service.getAlunoStatus(modelFilter).subscribe({
       next: (result) => {
         // Verificar se a resposta tem a estrutura nova ou antiga
         if (result && result.data && result.data.dataList) {

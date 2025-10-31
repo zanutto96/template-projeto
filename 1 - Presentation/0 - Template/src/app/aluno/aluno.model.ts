@@ -1,0 +1,50 @@
+﻿import { BaseFilter } from '../common/models/base-filter.model';
+
+export interface Aluno extends BaseFilter {
+  alunoFormacaoId: number | null;
+  alunoId: number;
+  alunoStatusId: number | null;
+  areaAtuacaoEmpresa: string | null;
+  areaAtuacaoId: number | null;
+  bairro: string | null;
+  cargoQueOcupa: string | null;
+  cEP: string | null;
+  comentario: string | null;
+  cPF: string;
+  dataAlteracao: Date | null;
+  dataCadastro: Date | null;
+  dataNascimento: Date | null;
+  ehEmail: boolean | null;
+  ehExAluno: boolean | null;
+  ehFalecido: boolean | null;
+  ehMalaDireta: boolean | null;
+  ehMkt: boolean | null;
+  ehSMS: boolean | null;
+  email: string;
+  endereco: string | null;
+  enderecoComplemento: string | null;
+  enderecoNumero: string | null;
+  estado: string | null;
+  estadoCivilId: number | null;
+  localNascimento: string | null;
+  nivelFormacaoId: number | null;
+  nomeCompleto: string;
+  nomeCracha: string | null;
+  nomeEmpresaOndeTrabalha: string | null;
+  nomeMae: string | null;
+  nomePai: string | null;
+  nomeSocial: string | null;
+  rG: string | null;
+  sexoId: number | null;
+  telCelular: string | null;
+  telComercial: string | null;
+  telResidencial: string | null;
+  temWhatsApp: boolean | null;
+  uRLFotoAluno: string | null;
+  uRLInstagran: string | null;
+  uRLLinkedin: string | null;
+  usuarioAlteracaoId: number | null;
+  usuarioCadastroId: number | null;
+  usuarioId: number | null;
+
+}

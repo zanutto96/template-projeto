@@ -13,6 +13,7 @@ namespace Data.Context
       }
 
       //Gerador Adicionar aqui
+public virtual DbSet<Aluno> Aluno { get; set; }
       public virtual DbSet<AlunoStatus> AlunoStatus { get; set; }
 
 

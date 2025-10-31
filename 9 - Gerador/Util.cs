@@ -299,9 +299,15 @@ namespace Gerador
                   {
                      dataItem = column.Name.Substring(0, column.Name.Length - 2);
                   }
-                  c += $"            <select class=\"form-control\" formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\" id=\"{column.Name.FirstCharToLowerCase()}\">\r\n";
-                  c += $"              <option value=\"\">Selecione...</option>\r\n";
-                  c += $"            </select>\r\n";
+                  c += $"            <custom-select\r\n";
+                  c += $"              formControlName=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              name=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              tableName=\"{dataItem}\"\r\n";
+                  c += $"              tableLabelFieldName=\"name\"\r\n";
+                  c += $"              [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              id=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              placeholder=\"Selecione...\">\r\n";
+                  c += $"            </custom-select>\r\n";
                }
                else
                {
@@ -367,7 +373,15 @@ namespace Gerador
                   dataItem = column.Name.Substring(0, column.Name.Length - 2);
                }
                c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-               c += $"            <select matNativeControl  formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+               c += $"            <custom-select\r\n";
+               c += $"              formControlName=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+               c += $"              name=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+               c += $"              tableName=\"{dataItem}\"\r\n";
+               c += $"              tableLabelFieldName=\"name\"\r\n";
+               c += $"              [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"\r\n";
+               c += $"              id=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+               c += $"              placeholder=\"Selecione...\">\r\n";
+               c += $"            </custom-select>\r\n";
             }
             if (!column.IsPrimaryKey && column.Type.ToLower() == "int" && !column.IsForeignKey)
             {
@@ -375,13 +389,29 @@ namespace Gerador
                {
                   var dataItem = column.Name.Substring(2);
                   c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-                  c += $"            <select matNativeControl formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+                  c += $"            <custom-select\r\n";
+                  c += $"              formControlName=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              name=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              tableName=\"{dataItem}\"\r\n";
+                  c += $"              tableLabelFieldName=\"name\"\r\n";
+                  c += $"              [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              id=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              placeholder=\"Selecione...\">\r\n";
+                  c += $"            </custom-select>\r\n";
                }
                else if (column.Name.ToLower().EndsWith("id"))
                {
                   var dataItem = column.Name.Substring(0, column.Name.Length - 2);
                   c += $"            <mat-label class=\"font-semibold\">{column.Name}</mat-label>\r\n";
-                  c += $"            <select  matNativeControl  formControlName=\"{column.Name.FirstCharToLowerCase()}\" {required} name=\"{column.Name.FirstCharToLowerCase()}\" datasource [dataitem]=\"'{dataItem}'\" [fieldFilterName]=\"'Descricao'\" [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"></select>\r\n";
+                  c += $"            <custom-select\r\n";
+                  c += $"              formControlName=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              name=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              tableName=\"{dataItem}\"\r\n";
+                  c += $"              tableLabelFieldName=\"name\"\r\n";
+                  c += $"              [(ngModel)]=\"model.{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              id=\"{column.Name.FirstCharToLowerCase()}\"\r\n";
+                  c += $"              placeholder=\"Selecione...\">\r\n";
+                  c += $"            </custom-select>\r\n";
                }
                else
                {
